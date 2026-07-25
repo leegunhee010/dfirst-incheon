@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 | 퍼스트디자인 인천지사</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+
+<!-- 로그인 -->
+<div id="login">
+  <div class="card">
+    <div class="logo">퍼스트<b>디자인</b></div>
+    <div class="sub">관리자 로그인</div>
+    <div class="err" id="loginErr"></div>
+    <label>아이디</label>
+    <input id="u" type="text" autocomplete="username" value="admin" />
+    <label>비밀번호</label>
+    <input id="p" type="password" autocomplete="current-password" placeholder="비밀번호" />
+    <button id="loginBtn">로그인</button>
+  </div>
+</div>
+
+<!-- 앱 -->
+<div class="app hide" id="app">
+  <aside class="side">
+    <div class="brand">퍼스트<b>디자인</b>&nbsp;<small>인천 ADMIN</small></div>
+    <nav>
+      <a data-tab="dash" class="on">대시보드</a>
+      <a data-tab="hero">히어로 배너</a>
+      <a data-tab="inq">견적 문의 <span class="badge hide" id="inqBadge">0</span></a>
+      <a data-tab="pf">포트폴리오</a>
+      <a data-tab="col">칼럼</a>
+      <a data-tab="copy">카피 편집</a>
+      <a data-tab="faq">FAQ 관리</a>
+      <a data-tab="img">이미지 교체</a>
+      <a data-tab="seo">SEO</a>
+      <a data-tab="acct">계정</a>
+    </nav>
+    <div class="foot">
+      <a href="http://localhost:5626" target="_blank">사이트 보기 ↗</a>
+      <button id="logoutBtn">로그아웃</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- 대시보드 -->
+    <section data-pane="dash">
+      <h1>대시보드</h1>
+      <div class="desc">사이트 현황을 한눈에 확인합니다.</div>
+      <div class="stats" id="statCards"></div>
+      <div class="panel"><h2>최근 견적 문의</h2><div id="recentWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- 히어로 배너 -->
+    <section data-pane="hero" class="hide">
+      <h1>히어로 배너</h1>
+      <div class="desc">홈 상단 슬라이드의 배경 이미지·문구·버튼을 관리합니다. 저장하면 홈에 바로 반영됩니다.</div>
+      <div class="size-hint">📐 <b>권장 이미지 크기 — 1920 × 800px</b> (고해상도 2400 × 1000px) · 가로형 비율 약 2.4~2.8:1 · JPG 권장(300~600KB).<br>※ 화면을 꽉 채우며 가장자리가 잘릴 수 있어요. <b>핵심 피사체는 오른쪽~가운데</b>에 두세요(왼쪽엔 글자가 올라갑니다).</div>
+      <div id="heroList"></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><button class="btn ghost" id="heroAdd" type="button">＋ 슬라이드 추가</button><button class="btn" id="heroSave" type="button">저장</button></div>
+    </section>
+
+    <!-- 문의 -->
+    <section data-pane="inq" class="hide">
+      <h1>견적 문의</h1>
+      <div class="desc">홈 견적 폼으로 접수된 문의입니다. 상태를 변경해 처리하세요.</div>
+      <div class="panel"><div id="inqWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- 포트폴리오 -->
+    <section data-pane="pf" class="hide">
+      <h1>포트폴리오</h1>
+      <div class="desc">작업물을 추가·삭제합니다. 추가하면 사이트 포트폴리오에 반영됩니다.</div>
+      <div class="size-hint">📐 <b>권장 이미지 크기 — 1200 × 900px (4:3)</b> 또는 정사각 1000 × 1000px · JPG 권장.</div>
+      <div class="panel">
+        <h2>새 작업 추가</h2>
+        <div class="formrow">
+          <div class="field"><label>제목</label><input id="pfTitle" placeholder="예: 호감 · 패키지 촬영"></div>
+          <div class="field"><label>카테고리</label>
+            <select id="pfCat"><option value="책자">카탈로그·브로슈어</option><option value="리플릿">리플렛·팜플렛</option><option value="로고">로고·브랜딩</option><option value="촬영">촬영·콘텐츠</option><option value="기타">포스터·기타</option></select>
+          </div>
+          <div class="field"><label>이미지</label><input id="pfImg" type="file" accept="image/*"></div>
+          <div class="field"><label>&nbsp;</label><button class="btn" id="pfAdd">추가</button></div>
+        </div>
+      </div>
+      <div class="panel"><h2>작업 목록</h2><div class="grid-pf" id="pfWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- 칼럼 -->
+    <section data-pane="col" class="hide">
+      <h1>칼럼</h1>
+      <div class="desc">칼럼 글을 작성·삭제합니다.</div>
+      <div class="panel">
+        <h2 id="colFormTitle">새 글 작성</h2>
+        <div class="field"><label>제목</label><input id="colTitle" placeholder="글 제목"></div>
+        <div class="field"><label>카테고리</label><input id="colCat" placeholder="예: Branding" value="Column"></div>
+        <div class="field"><label>요약</label><input id="colExcerpt" placeholder="한 줄 요약"></div>
+        <div class="field"><label>커버 이미지 (썸네일 · 목록·상단 대표컷)</label>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <div id="coverPrev" style="width:90px;height:66px;border-radius:8px;border:1px solid var(--line);background-color:var(--paper);background-size:cover;background-position:center"></div>
+            <input id="coverFile" type="file" accept="image/*">
+            <button class="btn sm ghost" id="coverUp" type="button">커버 업로드</button>
+            <button class="btn sm ghost" id="coverClear" type="button">제거</button>
+          </div>
+          <div class="size-hint inline">📐 권장 <b>1200 × 675px (16:9)</b> · JPG</div>
+        </div>
+        <div class="field"><label>본문 — 글 사이 원하는 위치에 이미지 삽입 가능 · <b style="color:var(--green)">FAQ 자동인식</b>: 본문에 「자주 묻는 질문」 제목 + 질문(소제목)·답변을 쓰거나 &lt;details&gt; 형식으로 넣으면 검색·AI용 FAQ 구조화데이터로 자동 변환됩니다</label>
+          <div class="rt-toolbar">
+            <button type="button" data-cmd="bold" title="굵게"><b>B</b></button>
+            <button type="button" data-cmd="formatBlock" data-val="h3" title="소제목">소제목</button>
+            <button type="button" data-cmd="insertUnorderedList" title="목록">• 목록</button>
+            <button type="button" id="edLinkBtn" title="링크 삽입 / 수정 / 해제">🔗 링크</button>
+            <button type="button" id="edImgBtn" title="이미지 삽입">＋ 이미지 삽입</button>
+            <input id="edImgFile" type="file" accept="image/*" style="display:none">
+            <button type="button" id="htmlToggle" title="HTML 소스 보기/붙여넣기" style="margin-left:auto">&lt;/&gt; HTML</button>
+          </div>
+          <div id="colEditor" class="rt-editor" contenteditable="true"></div>
+          <textarea id="colHtmlSrc" class="rt-editor hide" spellcheck="false" placeholder="HTML 소스를 여기에 바로 붙여넣으세요. 입력하면 위 편집기에 실시간 반영됩니다." style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;white-space:pre;tab-size:2"></textarea>
+        </div>
+        <div id="colDraftNote" class="hide" style="background:#fff3df;border:1px solid #f0d9ad;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13.5px;display:flex;align-items:center;gap:10px">
+          <span>작성 중이던 내용이 있습니다.</span>
+          <button class="btn sm" id="draftRestore" type="button">이어서 작성</button>
+          <button class="btn sm ghost" id="draftDiscard" type="button">새로 작성</button>
+        </div>
+        <div style="display:flex;gap:8px"><button class="btn" id="colSave">발행</button><button class="btn ghost" id="colDraft" style="border-color:#c47d12;color:#c47d12">임시저장</button><button class="btn ghost hide" id="colCancel">취소</button></div>
+      </div>
+      <div class="panel"><h2>글 목록</h2><div id="colWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- SEO -->
+    <section data-pane="copy" class="hide">
+      <h1>카피(문구) 편집</h1>
+      <div class="desc">사이트 화면에서 문구를 직접 클릭해 수정합니다. <b>편집하기</b>를 누르면 새 탭에서 편집 모드로 열리고, 글자를 클릭해 고친 뒤 <b>저장</b>하면 즉시 사이트와 검색 노출에 반영됩니다.</div>
+      <div class="panel"><h2>페이지 선택</h2><div id="copyWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- FAQ 관리 -->
+    <section data-pane="faq" class="hide">
+      <h1>FAQ 관리</h1>
+      <div class="desc">서비스 페이지의 <b>자주 묻는 질문</b>을 직접 추가·수정합니다. 저장하면 질문·답변이 <b>페이지 화면과 검색·AI용 구조화 데이터(FAQPage)에 함께</b> 반영됩니다. (페이지 로드 후 스크립트로 넣는 방식이 아니라 서버가 내보내는 HTML에 직접 렌더되어 AI 크롤러가 읽습니다.)</div>
+      <div class="panel"><h2>페이지 선택</h2><div id="faqPages">불러오는 중…</div></div>
+      <div class="panel hide" id="faqPanel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h2 style="margin:0" id="faqPageTitle"></h2><button class="btn sm ghost" id="faqBack">← 페이지 목록</button></div>
+        <div class="desc" style="margin-bottom:12px">아래 문항은 <b>기존 기본 FAQ 뒤에 추가로</b> 노출됩니다. 질문·답변을 비우면 저장 시 제외됩니다. 서비스당 총 12개 이내를 권장합니다.</div>
+        <div id="faqList"></div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn ghost sm" id="faqAdd" type="button">＋ 문항 추가</button>
+          <button class="btn sm" id="faqSave" type="button">저장</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 이미지 교체 -->
+    <section data-pane="img" class="hide">
+      <h1>이미지 교체</h1>
+      <div class="desc">각 페이지에 들어간 사진을 새 이미지로 교체합니다. 썸네일 아래 <b>이미지 변경</b>으로 업로드하면 즉시 사이트에 반영되고, <b>되돌리기</b>로 기본 이미지로 복원됩니다. (로고·아이콘은 제외)</div>
+      <div class="size-hint">📐 <b>권장 이미지 크기</b> — 기존 사진과 <b>비슷한 비율</b>로 올리면 가장 깔끔합니다. · 가로 카드 ≈ <b>1200 × 900px</b> · 정사각 ≈ <b>1000 × 1000px</b> · 가로 배너/슬라이드 ≈ <b>1920 × 800px</b> · JPG 권장.</div>
+      <div class="panel"><h2>페이지 선택</h2><div id="imgPages">불러오는 중…</div></div>
+      <div class="panel hide" id="imgPanel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><h2 style="margin:0" id="imgPageTitle"></h2><button class="btn sm" id="imgBack">← 페이지 목록</button></div><div id="imgGrid">불러오는 중…</div></div>
+    </section>
+
+    <section data-pane="seo" class="hide">
+      <h1>SEO 관리</h1>
+      <div class="desc">도메인·인증 코드·파비콘·페이지별 메타를 관리합니다. 저장 즉시 사이트에 반영됩니다.</div>
+
+      <div class="panel">
+        <h2>사이트 설정</h2>
+        <div class="field"><label>도메인 (canonical·OG·sitemap·RSS에 사용)</label><input id="setDomain" placeholder="https://www.example.co.kr"></div>
+        <div class="field"><label>사이트 이름 (og:site_name — 공유·검색에 표시되는 사이트 명칭)</label><input id="setSiteName" placeholder="예: 퍼스트디자인 스튜디오"></div>
+        <div class="field"><label>대표 공유 이미지 (기본 og:image — 카카오톡·페이스북·네이버 공유 시 썸네일)</label>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <img id="ogPrev" src="/assets/mainbanner0001.jpg" alt="og image" style="width:120px;height:63px;object-fit:cover;border:1px solid var(--line);border-radius:7px;background:#fff">
+            <input id="ogFile" type="file" accept="image/png,image/jpeg,image/webp">
+            <button class="btn sm ghost" id="ogUp">대표 이미지 업로드</button>
+          </div>
+          <div class="size-hint inline">📐 권장 <b>1200 × 630px (가로형)</b> JPG/PNG · 페이지별로 따로 지정 안 하면 이 이미지가 공통 사용됩니다.</div>
+        </div>
+        <div class="field"><label>기본 키워드 (keywords — 페이지에 자체 키워드가 없으면 이 값이 사용됨)</label><textarea id="setKeywords" rows="2" placeholder="예: 브랜드 디자인, 로고 제작, 카탈로그 제작, 제품 촬영"></textarea></div>
+        <div class="field"><label>Head 코드 — 모든 페이지 &lt;head&gt;에 삽입 (네이버 서치어드바이저·구글 인증 등)</label><textarea id="setHead" rows="4" placeholder='예: &lt;meta name="naver-site-verification" content="..." /&gt;'></textarea></div>
+        <div class="field"><label>파비콘 교체</label>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <img id="favPrev" src="/favicon.svg" alt="favicon" style="width:34px;height:34px;border:1px solid var(--line);border-radius:7px;background:#fff">
+            <input id="favFile" type="file" accept="image/png,image/svg+xml,image/x-icon,image/jpeg,.ico">
+            <button class="btn sm ghost" id="favUp">파비콘 업로드</button>
+          </div>
+          <div class="size-hint inline">📐 권장 <b>512 × 512px 정사각 PNG</b> 또는 SVG (배경 투명)</div>
+        </div>
+        <button class="btn" id="setSave">설정 저장</button>
+        <div style="margin-top:16px;font-size:13px;color:var(--gray)">자동 생성: <a href="/sitemap.xml" target="_blank" style="color:var(--green)">sitemap.xml</a> · <a href="/rss.xml" target="_blank" style="color:var(--green)">rss.xml</a> · <a href="/robots.txt" target="_blank" style="color:var(--green)">robots.txt</a> (도메인 저장 후 반영)</div>
+      </div>
+
+      <div class="panel">
+        <h2>이메일 알림 (견적 문의)</h2>
+        <div class="desc" style="margin:0 0 4px">홈 견적 폼으로 문의가 접수되면 지정한 이메일로 알림을 보냅니다. <b>Gmail 기준</b>이며, 보안을 위해 일반 비밀번호가 아닌 <b>앱 비밀번호</b>가 필요합니다.</div>
+        <div class="size-hint">🔑 <b>앱 비밀번호 만드는 법</b> — 구글 계정 → 보안 → 2단계 인증 켜기 → <b>앱 비밀번호</b> 생성(16자리). 그 16자리를 아래에 붙여넣으세요. (구글 계정 비밀번호 아님)</div>
+        <label style="display:flex;align-items:center;gap:9px;margin:6px 0 14px;font-weight:700;cursor:pointer"><input type="checkbox" id="mailEnabled" style="width:18px;height:18px"> 이메일 알림 사용</label>
+        <div class="field"><label>보내는 Gmail 주소</label><input id="mailUser" type="email" placeholder="example@gmail.com"></div>
+        <div class="field"><label>Gmail 앱 비밀번호 (16자리)</label><input id="mailPass" type="password" placeholder="설정됨 — 변경할 때만 입력" autocomplete="new-password"></div>
+        <div class="field"><label>받는 이메일 (문의 알림 수신)</label><input id="mailTo" type="email" placeholder="받을 주소 (work@firstmkt.co.kr 등)"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="mailSave">메일 설정 저장</button><button class="btn ghost" id="mailTest" type="button">테스트 메일 보내기</button></div>
+      </div>
+
+      <div class="panel"><h2>페이지별 메타 (title · description · keywords · 대표이미지)</h2><div id="seoWrap">불러오는 중…</div></div>
+    </section>
+
+    <!-- 계정 -->
+    <section data-pane="acct" class="hide">
+      <h1>관리자 계정</h1>
+      <div class="desc">관리자 계정을 추가·삭제하고 내 비밀번호를 변경합니다.</div>
+      <div class="panel">
+        <h2>관리자 추가</h2>
+        <div class="formrow" style="grid-template-columns:1fr 1fr auto">
+          <div class="field"><label>아이디</label><input id="newAdminU" placeholder="새 관리자 아이디"></div>
+          <div class="field"><label>비밀번호</label><input id="newAdminP" type="password" placeholder="비밀번호 (4자 이상)"></div>
+          <div class="field"><label>&nbsp;</label><button class="btn" id="adminAdd" type="button">추가</button></div>
+        </div>
+      </div>
+      <div class="panel"><h2>관리자 목록</h2><div id="adminList">불러오는 중…</div></div>
+      <div class="panel" style="max-width:480px">
+        <h2>내 비밀번호 변경</h2>
+        <div class="field"><label>현재 비밀번호</label><input id="pwCur" type="password" autocomplete="current-password"></div>
+        <div class="field"><label>새 비밀번호</label><input id="pwNew" type="password" autocomplete="new-password" placeholder="4자 이상"></div>
+        <button class="btn" id="pwChange" type="button">비밀번호 변경</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="imgTool" class="hide">
+  <button data-w="25" type="button">25%</button><button data-w="50" type="button">50%</button><button data-w="75" type="button">75%</button><button data-w="100" type="button">100%</button>
+  <span class="sep"></span>
+  <button data-al="left" type="button">좌</button><button data-al="center" type="button">중</button><button data-al="right" type="button">우</button>
+  <span class="sep"></span>
+  <button data-alt="1" id="imgAltBtn" type="button" title="이미지 대체 텍스트 (ALT) — 검색엔진·AI가 이미지 내용을 이해하는 데 사용됩니다">ALT</button>
+  <span class="sep"></span>
+  <button data-del="1" type="button" style="color:#ff8a7a">삭제</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>window.API_BASE="https://repeated-rays-strongly-deal.trycloudflare.com";</script>
+<script src="admin.js"></script>
+<script>
+/* HTML 소스 토글 — dfirst 편집기에 '바로 붙여넣기' 추가. colEditor(비주얼) ↔ colHtmlSrc(소스) 동기화 */
+(function () {
+  var ed = document.getElementById('colEditor');
+  var src = document.getElementById('colHtmlSrc');
+  var btn = document.getElementById('htmlToggle');
+  if (!ed || !src || !btn) return;
+  var srcMode = false;
+  btn.addEventListener('click', function () {
+    srcMode = !srcMode;
+    if (srcMode) { src.value = ed.innerHTML; src.classList.remove('hide'); ed.classList.add('hide'); btn.classList.add('on'); src.focus(); }
+    else { ed.innerHTML = src.value; src.classList.add('hide'); ed.classList.remove('hide'); btn.classList.remove('on'); }
+  });
+  // 소스 입력/붙여넣기 → 비주얼 편집기에 실시간 반영(저장은 colEditor.innerHTML을 읽으므로 항상 최신)
+  src.addEventListener('input', function () { ed.innerHTML = src.value; });
+})();
+</script>
+</body>
+</html>

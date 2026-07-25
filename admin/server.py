@@ -18,6 +18,24 @@ import bake  # noqa
 
 app = Flask(__name__, static_folder=None)
 app.secret_key = "dfirst-incheon-admin-secret-2026"
+# GitHub Pages(다른 도메인)에서 이 관리자 API를 호출할 수 있게 CORS + 크로스도메인 세션 쿠키
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+_ALLOWED_ORIGINS = {"https://leegunhee010.github.io"}
+
+@app.after_request
+def _cors(resp):
+    origin = request.headers.get("Origin", "")
+    if origin in _ALLOWED_ORIGINS:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Access-Control-Allow-Credentials"] = "true"
+        resp.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+        resp.headers["Vary"] = "Origin"
+    return resp
+
+@app.route("/api/<path:_p>", methods=["OPTIONS"])
+def _preflight(_p):
+    return ("", 204)
 
 # ---------- 저장 헬퍼 ----------
 def jload(name, default):
