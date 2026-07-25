@@ -1,0 +1,35 @@
+[
+ {
+  "title": "결과로 증명하는\n*공공기관* 디자인 파트너",
+  "eyebrow": "브로슈어 제작",
+  "subtitle": "국립과학수사연구원 — '진실을 밝히는 과학의 힘'<br>기관 브로슈어 기획·디자인·인쇄",
+  "image": "theme/assets/first/banner_Gukgwasu01.jpg",
+  "btn1Link": "portfolio.html",
+  "textColor": "light",
+  "btn1Text": "",
+  "btn2Text": "",
+  "btn2Link": ""
+ },
+ {
+  "title": "금융권이 선택한\n*정확한* 편집 디자인",
+  "eyebrow": "사보 제작",
+  "subtitle": "KB국민은행 — 글로벌 네트워크 사보 내지<br>복잡한 정보를 명확한 편집으로",
+  "image": "theme/assets/first/banner_kb01.jpg",
+  "btn1Link": "portfolio.html",
+  "textColor": "light",
+  "btn1Text": "",
+  "btn2Text": "",
+  "btn2Link": ""
+ },
+ {
+  "title": "캠페인의 얼굴을 만드는\n*포스터* 디자인",
+  "eyebrow": "포스터 제작",
+  "subtitle": "이화여자대학교 — AI 산학협력 세미나 포스터<br>행사·전시·프로모션 포스터 제작",
+  "image": "theme/assets/first/banner_Ewha01.jpg",
+  "btn1Link": "portfolio.html",
+  "textColor": "light",
+  "btn1Text": "",
+  "btn2Text": "",
+  "btn2Link": ""
+ }
+]

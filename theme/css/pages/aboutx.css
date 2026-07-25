@@ -1,0 +1,62 @@
+/* 회사소개 확장(본사 콘텐츠) */
+/* 배너 삭제 후 서비스분야 하단 여백 축소 */
+.about-service{margin-bottom:30px !important}
+/* 히어로: 담백한 에디토리얼 (이미지 상단 → 카피 하단) */
+.about-hero-top{display:block !important;margin-top:52px}
+.about-hero .about-hero-img{margin-top:0}
+.about-hero-text{max-width:860px}
+.abh-mark{background:linear-gradient(transparent 62%, rgba(18,179,160,.28) 62%);padding:0 2px}
+.abx-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.abx-ey{font-size:13px;font-weight:800;letter-spacing:.2em;color:#0C9384;margin:0 0 12px}
+.abx-t{font-size:36px;font-weight:800;letter-spacing:-0.025em;color:#111;line-height:1.35;margin:0 0 14px}
+.abx-t span{color:#0C9384}
+.abx-s{font-size:16px;color:#767676;margin:0 0 48px}
+/* CEO */
+.abx-ceo{padding:24px 0 100px;background:#fff}
+.abx-ceo-inner{max-width:860px;text-align:center}
+.abx-quote{font-size:80px;font-weight:900;color:#0C9384;line-height:.6;margin:26px 0 30px}
+.abx-ceo-lead{font-size:28px;font-weight:500;color:#111;line-height:1.55;margin:0 0 28px;letter-spacing:-0.02em}
+.abx-ceo-lead b{font-weight:800;color:#0C9384}
+.abx-ceo-body{font-size:16.5px;color:#666;line-height:1.9;margin:0 0 34px}
+.abx-ceo-sign{font-size:15px;color:#8a8a8a}
+.abx-ceo-sign b{font-size:19px;color:#111;margin-left:8px}
+/* WHY */
+.abx-why{padding:100px 0;background:#f2f7f6}
+.abx-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.abx-why-card{background:#fff;border:1px solid #e6eceb;border-radius:14px;padding:30px 26px}
+.abx-why-card span{font-size:14px;font-weight:800;color:#0C9384;letter-spacing:.08em}
+.abx-why-card h3{font-size:18.5px;font-weight:800;color:#111;margin:12px 0 10px;letter-spacing:-0.01em}
+.abx-why-card p{font-size:14px;color:#767676;line-height:1.65;margin:0}
+.abx-team{margin:34px 0 0;font-size:15px;color:#666;line-height:1.7;text-align:center}
+.abx-team b{color:#0C9384}
+/* STATS */
+.abx-stats{background:linear-gradient(120deg,#0B2E2A 0%,#0d5f55 100%);padding:72px 0}
+.abx-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.abx-stats b{display:block;font-size:46px;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.abx-stats b i{font-style:normal;font-size:26px;color:#2fd0bd;margin-left:2px}
+.abx-stats span{display:block;font-size:14px;color:rgba(255,255,255,.65);margin-top:8px}
+/* HISTORY */
+.abx-history{padding:100px 0}
+.abx-h-list{position:relative;margin-top:10px;padding-left:26px;border-left:2px solid #d8e8e5}
+.abx-h-item{position:relative;padding:0 0 30px}
+.abx-h-item::before{content:"";position:absolute;left:-33px;top:5px;width:12px;height:12px;border-radius:50%;background:#0C9384;border:3px solid #e7f4f2}
+.abx-h-item span{display:block;font-size:14px;font-weight:800;color:#0C9384;margin-bottom:4px}
+.abx-h-item p{font-size:16px;color:#333;margin:0;line-height:1.6}
+.abx-h-item:last-child{padding-bottom:0}
+.abx-h-item:last-child p{font-weight:800;color:#111}
+/* OFFICES */
+.abx-offices{padding:0 0 110px}
+.abx-office-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.abx-office{border:1px solid #e6eceb;border-radius:16px;padding:32px 34px}
+.abx-office--main{border:2px solid #0C9384;background:#f2f9f8}
+.abx-office h4{font-size:19px;font-weight:800;color:#111;margin:0 0 14px}
+.abx-office b{display:block;font-size:24px;font-weight:800;color:#0C9384;margin-bottom:10px}
+.abx-office p{font-size:14.5px;color:#666;line-height:1.6;margin:0}
+.abx-office em{display:block;font-style:normal;font-size:13px;font-weight:700;color:#0A7A6E;margin-top:12px}
+@media (max-width:1024px){
+  .abx-why-grid{grid-template-columns:repeat(2,1fr)}
+  .abx-stats-grid{grid-template-columns:repeat(2,1fr);row-gap:36px}
+  .abx-office-grid{grid-template-columns:1fr}
+  .abx-ceo-lead{font-size:21px}
+  .abx-t{font-size:28px}
+}

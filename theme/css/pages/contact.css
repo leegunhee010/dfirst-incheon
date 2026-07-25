@@ -1,0 +1,381 @@
+/* contact.css — 문의하기 페이지 (원본 computed style 기반) */
+
+/* 헤더·플로팅배너 숨김 (이탈 방지) */
+.custom-header,
+.floating-banner { display: none !important; }
+
+/* 닫기 버튼 */
+.ct-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s ease;
+}
+.ct-close:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.ct-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+}
+
+/* ========== 왼쪽 사이드 ========== */
+.ct-left {
+    width: 380px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 120px;
+    align-self: flex-start;
+    z-index: 10;
+}
+.ct-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+.ct-desc {
+    font-size: 16px;
+    color: #7a7a7a;
+    line-height: var(--lh-16);
+    letter-spacing: -0.025em;
+    margin: 20px 0 0;
+}
+.ct-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 40px;
+}
+.ct-info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.ct-info-icon {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+}
+.ct-info-icon svg {
+    width: 56px;
+    height: 56px;
+}
+.ct-info-text {}
+.ct-info-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0C9384;
+    margin: 0 0 8px;
+    line-height: var(--lh-1);
+    letter-spacing: -0.025em;
+}
+.ct-info-value {
+    font-size: 18px;
+    font-weight: 400;
+    color: #7a7a7a;
+    margin: 0;
+    line-height: var(--lh-1);
+    letter-spacing: -0.025em;
+}
+
+/* ========== 오른쪽 폼 ========== */
+.ct-right {
+    flex: 1;
+    padding: 120px 0 80px 60px;
+    border-left: 1px solid rgba(118, 118, 118, 0.3);
+}
+.ct-form-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.ct-form-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+.ct-form-notice {
+    font-size: 18px;
+    color: #0C9384;
+    font-weight: 700;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+.ct-form-divider {
+    border: none;
+    border-top: 1px solid rgba(118, 118, 118, 0.3);
+    margin: 30px 0 60px;
+}
+
+/* 폼 필드 */
+.ct-form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 60px;
+}
+.ct-field {
+    flex: 1;
+}
+.ct-field-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    line-height: var(--lh-1);
+    padding-bottom: 20px;
+    margin-bottom: 0;
+}
+.ct-field-label small {
+    font-weight: 400;
+    color: #767676;
+}
+.ct-req {
+    color: #ff0000;
+}
+.ct-field input[type="text"],
+.ct-field input[type="tel"],
+.ct-field input[type="email"],
+.ct-field input[type="number"],
+.ct-field select,
+.ct-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #767676;
+    background: #f6f6f6;
+    outline: none;
+    height: 47px;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    transition: box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+.ct-field select {
+    padding: 6px 20px 6px 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23767676' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+.ct-field input:focus,
+.ct-field select:focus,
+.ct-field textarea:focus {
+    box-shadow: 0 0 0 2px rgba(12, 147, 132, 0.3);
+}
+.ct-field textarea {
+    height: 160px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* 라디오 그룹 */
+.ct-radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.ct-radio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #767676;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 14px 39px;
+    border-radius: 100px;
+    background: #f6f6f6;
+    transition: all 0.3s;
+    text-align: center;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+}
+.ct-radio:hover {
+    background: #ececec;
+}
+.ct-radio input[type="radio"] {
+    display: none;
+}
+.ct-radio:has(input:checked) {
+    background: #111;
+    color: #fff;
+}
+
+/* 파일 업로드 */
+.ct-file-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    margin-bottom: 20px;
+}
+.ct-file-row {
+    display: flex;
+    gap: 20px;
+}
+.ct-file-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 164px;
+    height: 42px;
+    padding: 14px 0;
+    border: 0.5px solid rgba(118, 118, 118, 0.3);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #767676;
+    text-align: center;
+    line-height: var(--lh-1);
+    cursor: pointer;
+    background: #f6f6f6;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    box-sizing: border-box;
+}
+.ct-file-btn:hover {
+    border-color: #0C9384;
+    color: #0C9384;
+}
+.ct-file-btn:hover svg path {
+    fill: #0C9384;
+    stroke: #0C9384;
+}
+.ct-file-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* 파일 힌트 */
+.ct-file-hint {
+    font-size: 13px;
+    color: #999;
+    line-height: var(--lh-13);
+    margin: -12px 0 16px;
+}
+
+/* 파일 목록 */
+.ct-file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.ct-file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f6f6f6;
+    border-radius: 7px;
+    font-size: 14px;
+    color: #333;
+    line-height: var(--lh-1);
+}
+.ct-file-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+.ct-file-size {
+    font-size: 13px;
+    color: #999;
+    flex-shrink: 0;
+    line-height: var(--lh-1);
+}
+.ct-file-remove {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    line-height: var(--lh-1);
+    flex-shrink: 0;
+    transition: color 0.2s;
+}
+.ct-file-remove:hover {
+    color: #ff0000;
+}
+
+/* 접수 버튼 */
+.ct-submit {
+    width: 100%;
+    padding: 18px;
+    background: #0C9384;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    transition: background 0.2s ease;
+}
+.ct-submit:hover {
+    background: #0A7A6E;
+}
+
+/* ========== 반응형 ========== */
+@media (max-width: 1366px) {
+    .ct-page { padding: 0 40px; }
+}
+@media (max-width: 1024px) {
+    .ct-page { flex-direction: column; padding: 0 40px; }
+    .ct-left { width: 100%; padding: 80px 0 0; position: static; }
+    .ct-right { padding: 40px 0 80px; border-left: none; }
+    .ct-form-row { flex-wrap: wrap; }
+    .ct-form-row-4 > .ct-field { flex: 1 1 45%; }
+}
+@media (max-width: 767px) {
+    .ct-page { padding: 0 20px; }
+    .ct-left { padding: 0; }
+    .ct-title { font-size: 24px; letter-spacing: -0.025em; line-height: var(--lh-1); }
+    .ct-desc { font-size: 14px; line-height: var(--lh-14); }
+    .ct-right { padding: 30px 0 60px; }
+    .ct-form-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .ct-form-title { font-size: 20px; line-height: var(--lh-1); }
+    .ct-form-notice { font-size: 13px; line-height: var(--lh-1); }
+    .ct-form-divider { margin: 20px 0; }
+    .ct-form-row { flex-direction: column; gap: 0; margin-bottom: 0; }
+    .ct-form-row .ct-field { margin-bottom: 30px; }
+    .ct-field-label { font-size: 14px; line-height: var(--lh-1); padding-bottom: 12px; }
+    .ct-file-row { flex-wrap: wrap; }
+    .ct-radio { padding: 12px 20px; font-size: 13px; line-height: var(--lh-1); }
+    .ct-submit { font-size: 16px; line-height: var(--lh-1); padding: 16px; margin-top: 30px; }
+    .ct-info-icon { width: 44px; height: 44px; }
+    .ct-info-icon svg { width: 44px; height: 44px; }
+    .ct-info-label { font-size: 14px; line-height: var(--lh-1); }
+    .ct-info-value { font-size: 16px; line-height: var(--lh-1); }
+    .ct-close { top: 16px; right: 16px; width: 40px; height: 40px; }
+}

@@ -1,0 +1,26 @@
+/* subsvc.css — 인쇄 하위 서비스 전용 페이지(카탈로그/리플렛/팜플렛/브로슈어/포스터) */
+.ss-sec{max-width:1248px;margin:0 auto;padding:72px 24px 20px}
+.ss-sec .section-tag{font-size:12.5px;letter-spacing:.25em;font-weight:700;color:#0C9384;margin:0 0 12px}
+.ss-t{font-size:clamp(27px,3.6vw,40px);font-weight:800;letter-spacing:-.03em;color:#111;margin:0 0 26px}
+/* 소개 글: 좌 번호+제목 / 우 본문 가로 스플릿, 상하 스택 (haoc 2열 병렬과 다른 레이아웃) */
+.ss-item{display:grid;grid-template-columns:380px 1fr;gap:24px 56px;padding:38px 0;border-top:1px solid #e6eceb}
+.ss-item:first-of-type{border-top:2px solid #111}
+.ss-no{display:block;font-family:'Montserrat','Pretendard',sans-serif;font-size:14px;font-weight:800;color:#0C9384;letter-spacing:.1em;margin-bottom:10px}
+.ss-item h3{font-size:23px;font-weight:800;letter-spacing:-0.02em;color:#111;line-height:1.4;margin:0;word-break:keep-all}
+.ss-item p{font-size:16.5px;color:#555;line-height:1.85;margin:0;word-break:keep-all}
+/* 작업 사례 — 정해진 레이아웃: 2열 균일 카드, 전부 3:2 고정(가로형), 크기·정렬 통일 */
+.ss-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;margin-top:8px}
+.ss-grid figure{margin:0}
+.ss-grid img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:16px;display:block;box-shadow:0 26px 54px -32px rgba(10,52,46,.4)}
+.ss-grid figcaption{font-size:15.5px;font-weight:600;color:#333;margin-top:16px;word-break:keep-all}
+.ss-more{display:inline-flex;align-items:center;gap:8px;margin-top:44px;font-size:15.5px;font-weight:700;color:#0C9384;text-decoration:none}
+.ss-more:hover{text-decoration:underline}
+@media (max-width:1024px){
+  .ss-item{grid-template-columns:1fr;gap:14px}
+}
+@media (max-width:767px){
+  .ss-sec{padding:48px 24px 10px}
+  .ss-item h3{font-size:19px}
+  .ss-item p{font-size:15px}
+  .ss-grid{grid-template-columns:1fr;gap:28px}
+}

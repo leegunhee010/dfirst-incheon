@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 관리자 런타임 임시
+admin/data/*.log
+*.log
+ck.txt
+pl.json
+h.json
+c.json
+hs.json
+so.json
+fq.json
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 관리자 인증정보(비번 해시) — 저장소 제외
+admin/data/auth.json
+admin/data/admins.json

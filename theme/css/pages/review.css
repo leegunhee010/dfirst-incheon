@@ -1,0 +1,267 @@
+/* review.css — 고객 후기 페이지 (원본 사이트 동일) */
+
+.rv-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0;
+}
+
+/* ========== 왼쪽 사이드 ========== */
+.rv-left {
+    width: 320px;
+    flex-shrink: 0;
+    margin-right: 60px;
+    padding: 120px 0 160px;
+    position: sticky;
+    top: 122px;
+    align-self: flex-start;
+    z-index: 10;
+}
+.rv-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+.rv-desc {
+    font-size: 16px;
+    color: #7a7a7a;
+    line-height: var(--lh-16);
+    margin: 20px 0 0;
+}
+.rv-rating-box {
+    margin-top: 40px;
+    padding: 30px;
+    border: 1px solid rgba(118, 118, 118, 0.3);
+    border-radius: 7px;
+    max-width: 320px;
+}
+.rv-rating-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+    line-height: var(--lh-1);
+}
+.rv-rating-score {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    line-height: var(--lh-1);
+    margin: 10px 0 30px;
+}
+.rv-rating-sub {
+    font-size: 16px;
+    font-weight: 700;
+    color: #767676;
+    line-height: var(--lh-1);
+}
+.rv-rating-bars {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+.rv-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #767676;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+}
+.rv-bar-label {
+    width: 30px;
+    text-align: left;
+}
+.rv-bar-track {
+    flex: 1;
+    background: #eaeaea;
+    border-radius: 5px;
+    height: 14px;
+    overflow: hidden;
+}
+.rv-bar-fill {
+    height: 100%;
+    background: #0C9384;
+    border-radius: 5px;
+    width: 0;
+    transition: width 1.2s ease-out;
+}
+.rv-bar-num {
+    width: 35px;
+    text-align: right;
+}
+
+/* ========== 오른쪽 리뷰 ========== */
+.rv-right {
+    flex: 1;
+    margin-left: 60px;
+    padding: 208px 0 160px;
+    position: relative;
+}
+/* 구분선: 사이드와 콘텐츠 사이 가운데(120px 거터의 중앙) */
+.rv-right::before {
+    content: "";
+    position: absolute;
+    left: -60px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #00000020;
+}
+.rv-tabs {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.rv-tab {
+    font-size: 20px;
+    font-weight: 500;
+    color: #767676;
+    padding: 0 0 10px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.2s ease;
+    line-height: var(--lh-1);
+}
+.rv-tab.active {
+    color: #0C9384;
+    border-bottom-color: #0C9384;
+}
+
+/* 패널 전환 */
+.rv-panel { display: none; }
+.rv-panel.active { display: block; }
+
+/* ========== 포토 후기 그리드 ========== */
+.rv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 20px;
+}
+.rv-card-thumb {
+    border-radius: 7px;
+    overflow: hidden;
+    aspect-ratio: 410 / 230;
+}
+.rv-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.rv-card-from {
+    display: flex;
+    gap: 4px;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0C9384;
+    line-height: var(--lh-1);
+}
+.rv-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.46;
+    letter-spacing: -0.025em;
+    margin: 10px 0;
+}
+.rv-card-desc {
+    font-size: 14px;
+    color: #767676;
+    line-height: var(--lh-14);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ========== 글 후기 리스트 ========== */
+.rv-text-list {
+    display: flex;
+    flex-direction: column;
+}
+.rv-text-card {
+    padding: 30px 0;
+    border-bottom: 1px solid rgba(118, 118, 118, 0.15);
+}
+.rv-text-card:first-child {
+    padding-top: 0;
+}
+.rv-text-cat {
+    font-size: 14px;
+    font-weight: 400;
+    color: #0C9384;
+    display: block;
+    margin-bottom: 8px;
+    line-height: var(--lh-1);
+}
+.rv-text-content {
+    font-size: 16px;
+    font-weight: 400;
+    color: #111;
+    line-height: var(--lh-16);
+    margin: 0 0 10px;
+}
+.rv-text-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #767676;
+    line-height: var(--lh-1);
+}
+.rv-text-stars {
+    display: inline-flex;
+    gap: 1px;
+}
+.rv-star {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0e0e0'%3E%3Cpath d='M12 1.5c.4 0 .78.2 1 .55l2.63 5.33 5.88.86c.78.11 1.09 1.07.52 1.62l-4.25 4.15 1 5.85c.13.78-.68 1.38-1.38 1L12 17.77l-5.4 2.84c-.7.37-1.51-.23-1.38-1l1-5.85-4.25-4.15c-.57-.55-.26-1.5.52-1.62l5.88-.86L11 2.05c.22-.35.6-.55 1-.55z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.rv-star.filled {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF6E3F'%3E%3Cpath d='M12 1.5c.4 0 .78.2 1 .55l2.63 5.33 5.88.86c.78.11 1.09 1.07.52 1.62l-4.25 4.15 1 5.85c.13.78-.68 1.38-1.38 1L12 17.77l-5.4 2.84c-.7.37-1.51-.23-1.38-1l1-5.85-4.25-4.15c-.57-.55-.26-1.5.52-1.62l5.88-.86L11 2.05c.22-.35.6-.55 1-.55z'/%3E%3C/svg%3E");
+}
+
+/* ========== 반응형 ========== */
+@media (max-width: 1366px) {
+    .rv-page { padding: 0 40px; }
+}
+@media (max-width: 1024px) {
+    .rv-page { flex-direction: column; padding: 0 40px; }
+    .rv-left { width: 100%; margin-right: 0; padding: 80px 0 0; border-right: none; position: static; }
+    .rv-right { margin-left: 0; padding: 40px 0 100px; padding-left: 0; }
+    .rv-right::before { display: none; }
+    .rv-rating-box { max-width: 100%; }
+}
+@media (max-width: 767px) {
+    .rv-page { padding: 0 20px; }
+    .rv-left { padding: 60px 0 0; }
+    .rv-title { font-size: 24px; letter-spacing: -0.025em; line-height: var(--lh-1); }
+    .rv-desc { font-size: 14px; line-height: var(--lh-14); }
+    .rv-right { padding: 30px 0 60px; }
+    .rv-grid { grid-template-columns: 1fr; gap: 30px; }
+    .rv-card-title { font-size: 16px; line-height: 1.46; }
+    .rv-card-desc { font-size: 13px; line-height: var(--lh-13); }
+    .rv-tab { font-size: 14px; line-height: var(--lh-1); }
+    .rv-rating-box { padding: 20px; }
+    .rv-rating-label { font-size: 14px; line-height: var(--lh-1); }
+    .rv-text-content { font-size: 14px; line-height: var(--lh-14); }
+    .rv-text-card { padding: 20px 0; }
+}

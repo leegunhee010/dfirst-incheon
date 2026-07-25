@@ -1,0 +1,90 @@
+/* tokens.css — poedit.co.kr 원본에서 DevTools MCP로 추출한 값 */
+/* 임의 수정 금지. 원본과 불일치 시 DevTools에서 재확인 */
+
+@font-face { font-family: 'Pretendard'; font-weight: 100; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Thin.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 200; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-ExtraLight.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 300; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Light.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 400; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Regular.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 500; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Medium.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 600; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-SemiBold.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 700; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Bold.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 800; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-ExtraBold.woff2') format('woff2'); }
+@font-face { font-family: 'Pretendard'; font-weight: 900; font-style: normal; font-display: swap; src: url('../assets/fonts/Pretendard-Black.woff2') format('woff2'); }
+
+:root {
+  /* Colors — DevTools computed style에서 추출 */
+  --color-primary: #0C9384;        /* rgb(255, 110, 63) — CTA, 액센트 */
+  --color-text: #111111;           /* rgb(17, 17, 17) — 본문/헤딩 */
+  --color-text-light: #767676;     /* rgb(118, 118, 118) — 보조 텍스트 */
+  --color-text-muted: rgba(17, 17, 17, 0.698); /* h3 서브텍스트 */
+  --color-bg: #ffffff;
+  --color-bg-light: #f6f6f6;      /* rgb(246, 246, 246) — 섹션 배경 */
+  --color-black: #111111;
+
+  /* Typography — DevTools computed style */
+  --font-primary: 'Pretendard', sans-serif;
+  --fs-body: 16px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Headings */
+  --fs-h2: 48px;
+  --lh-h2: 57.6px;                /* 1.2 */
+  --fw-h2: 700;
+
+  --fs-h3: 16px;
+  --lh-h3: 16px;
+  --ls-h3: -0.4px;
+
+  /* Line-height scale — 한 줄 텍스트는 1, 여러 줄 텍스트는 폰트 크기별 값 적용 */
+  --lh-1: 1;        /* 한 줄(제목·라벨·버튼·메뉴·숫자 등) */
+  --lh-12: 1.72;
+  --lh-13: 1.70;
+  --lh-14: 1.68;
+  --lh-15: 1.66;
+  --lh-16: 1.64;
+  --lh-18: 1.58;
+  --lh-20: 1.52;
+  --lh-22: 1.51;
+  --lh-24: 1.50;
+  --lh-26: 1.48;
+  --lh-28: 1.46;
+  --lh-30: 1.44;
+  --lh-32: 1.42;
+  --lh-36: 1.40;
+  --lh-40: 1.38;
+  --lh-48: 1.32;
+  --lh-52: 1.30;
+
+  /* Button */
+  --fs-btn: 18px;
+  --fw-btn: 600;
+  --ls-btn: -1px;
+
+  /* Nav */
+  --fs-nav: 16px;
+  --fw-nav: 600;
+
+  /* Layout — DevTools computed style */
+  --container-width: 1280px;
+  --container-wide: 1360px;
+
+  /* Section paddings — 섹션별로 다름, 자주 쓰이는 값 */
+  --sp-section-sm: 80px;
+  --sp-section-md: 120px;
+  --sp-section-lg: 160px;
+
+  /* Header */
+  --header-topbar-height: 38px;
+  --header-height: 122.5px;
+  --header-cta-width: 171px;
+  --header-cta-height: 84px;
+
+  /* Breakpoints (CSS 변수로는 미디어쿼리에 못 쓰지만 참조용) */
+  /* 479px — 소형 모바일 */
+  /* 767px — 모바일 */
+  /* 1024px — 태블릿 */
+  /* 1366px — 노트북 */
+}

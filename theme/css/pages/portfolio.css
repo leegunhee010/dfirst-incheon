@@ -1,0 +1,146 @@
+/* portfolio.css — 포트폴리오 페이지 (원본 computed style 기반) */
+
+.pf-page {
+    padding: 120px 0 160px;
+}
+.pf-page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.pf-page-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+
+/* 필터 — 공지/후기 탭과 동일한 밑줄 스타일 */
+.pf-filters {
+    display: flex;
+    gap: 30px;
+    margin-top: 80px;
+}
+.pf-filter-btn {
+    padding: 0 0 10px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 500;
+    color: #767676;
+    line-height: var(--lh-1);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.pf-filter-btn.active,
+.pf-filter-btn:hover {
+    color: #0C9384;
+    border-bottom-color: #0C9384;
+}
+
+/* 그리드 */
+.pf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px 20px;
+    margin-top: 40px;
+}
+.pf-card {
+    display: flex;
+    flex-direction: column;
+}
+.pf-card-thumb {
+    aspect-ratio: 413 / 280;
+    border-radius: 7px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.pf-card-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    transition: transform 0.4s ease;
+}
+.pf-card-thumb:hover .pf-card-img {
+    transform: scale(1.06);
+}
+.pf-card-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    line-height: var(--lh-1);
+    margin: 15px 0 5px;
+}
+.pf-card-type {
+    font-size: 14px;
+    font-weight: 400;
+    color: #767676;
+    line-height: var(--lh-1);
+    margin: 8px 0 0;
+}
+
+/* 모달 */
+.pf-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+}
+.pf-modal.active { display: flex; align-items: center; justify-content: center; }
+.pf-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+.pf-modal-content {
+    position: relative;
+    max-width: 1240px;
+    width: 92%;
+    animation: pfFadeIn 0.3s ease;
+}
+.pf-modal-img {
+    width: 100%;
+    height: auto;
+    max-height: 86vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 7px;
+}
+.pf-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    font-size: 32px;
+    color: #fff;
+    line-height: var(--lh-1);
+    cursor: pointer;
+}
+@keyframes pfFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 반응형 */
+@media (max-width: 1280px) and (min-width: 768px) {
+    .pf-page { padding-left: 40px; padding-right: 40px; box-sizing: border-box; }
+}
+@media (max-width: 1024px) {
+    .pf-grid { grid-template-columns: repeat(2, 1fr); }
+    .pf-filters { flex-wrap: wrap; }
+}
+@media (max-width: 767px) {
+    .pf-page { padding: 80px 20px 80px; }
+    .pf-page-title { font-size: 24px; letter-spacing: -0.025em; }
+    .pf-filters { flex-wrap: wrap; margin-top: 30px; gap: 16px; }
+    .pf-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 30px; }
+    .pf-filter-btn { font-size: 14px; padding: 0 0 8px; }
+    .pf-card-name { font-size: 16px; margin: 12px 0 4px; }
+    .pf-card-type { font-size: 13px; }
+    .pf-modal-content { width: 95%; }
+    .pf-modal-close { top: -36px; font-size: 28px; }
+}

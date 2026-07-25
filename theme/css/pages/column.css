@@ -1,0 +1,133 @@
+/* column.css — 전문 칼럼 페이지 (원본 computed style 기반) */
+
+.col-page {
+    padding: 120px 0 160px;
+}
+.col-page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.col-page-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.025em;
+    line-height: var(--lh-1);
+    margin: 0;
+}
+.col-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px 20px;
+    margin-top: 80px;
+}
+.col-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: filter 0.25s ease;
+}
+.col-card:hover { filter: brightness(0.92); }
+.col-card-thumb {
+    border-radius: 7px;
+    overflow: hidden;
+    aspect-ratio: 826 / 464;
+}
+.col-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.col-card-cat {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0C9384;
+    line-height: var(--lh-1);
+    margin: 15px 0 10px;
+}
+.col-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    line-height: var(--lh-1);
+    margin: 0;
+    letter-spacing: -0.025em;
+}
+.col-card-meta {
+    display: flex;
+    gap: 0;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #7a7a7a;
+    line-height: var(--lh-1);
+}
+.col-card-meta span + span::before {
+    content: "|";
+    margin: 0 4px;
+}
+.col-empty {
+    grid-column: 1 / -1;
+    max-width: 413px;
+}
+.col-empty .col-card-thumb {
+    margin-bottom: 0;
+}
+
+/* 빈 상태 */
+.col-empty-text {
+    text-align: center;
+    color: #767676;
+    padding: 80px 0;
+    font-size: 16px;
+    line-height: var(--lh-16);
+}
+
+/* 페이지네이션 */
+.col-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 60px;
+}
+.col-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #767676;
+    line-height: var(--lh-1);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+.col-pagination .page-numbers.current {
+    background: #0C9384;
+    color: #fff;
+}
+.col-pagination .page-numbers:hover:not(.current) {
+    background: #f6f6f6;
+    color: #111;
+}
+
+/* 반응형 */
+@media (max-width: 1280px) and (min-width: 768px) {
+    .col-page { padding-left: 40px; padding-right: 40px; box-sizing: border-box; }
+}
+@media (max-width: 1024px) {
+    .col-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+    .col-page { padding: 80px 20px 80px; }
+    .col-page-title { font-size: 24px; line-height: var(--lh-1); letter-spacing: -0.025em; }
+    .col-list { grid-template-columns: 1fr; margin-top: 30px; gap: 30px; }
+    .col-card-title { font-size: 16px; line-height: var(--lh-1); }
+    .col-card-cat { font-size: 13px; line-height: var(--lh-1); }
+    .col-card-meta { font-size: 12px; line-height: var(--lh-1); margin-top: 10px; }
+    .col-pagination { margin-top: 40px; }
+    .col-pagination .page-numbers { width: 36px; height: 36px; font-size: 14px; line-height: var(--lh-1); }
+}
