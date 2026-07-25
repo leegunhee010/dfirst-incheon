@@ -315,10 +315,14 @@ def settings_save():
     for k in ("domain", "headCode", "siteName", "keywords", "mailEnabled", "mailUser", "mailTo"):
         if k in d:
             st[k] = d[k]
+    for k in ("snsKakao", "snsInstagram", "snsBlog", "snsPhone"):   # 플로팅 SNS 링크
+        if k in d:
+            st[k] = d[k]
     if d.get("mailPass"):
         st["mailPass"] = d["mailPass"]
     jsave("settings", st)
     bake.bake_settings()
+    bake.bake_sns()
     return jsonify({"ok": True})
 
 @app.post("/api/settings/favicon")

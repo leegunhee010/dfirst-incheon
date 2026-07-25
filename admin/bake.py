@@ -141,6 +141,49 @@ def bake_settings():
         n += 1
     return n
 
+# ---------- 플로팅 SNS 버튼 ----------
+# settings 키: snsKakao, snsInstagram, snsBlog, snsPhone (값 있는 것만 노출)
+def bake_sns():
+    import json
+    st = json.loads((DATA / "settings.json").read_text(encoding="utf-8")) if (DATA / "settings.json").exists() else {}
+    kakao = (st.get("snsKakao") or "").strip()
+    insta = (st.get("snsInstagram") or "").strip()
+    blog = (st.get("snsBlog") or "").strip()
+    phone = (st.get("snsPhone") or "").strip()
+    btns = []
+    if kakao:
+        btns.append(f'<a class="sns-fab sns-kakao" href="{kakao}" target="_blank" rel="noopener" aria-label="카카오톡 상담">'
+                    '<svg viewBox="0 0 24 24" width="24" height="24"><path fill="#3C1E1E" d="M12 3C6.5 3 2 6.5 2 10.8c0 2.8 1.9 5.2 4.7 6.6-.2.7-.7 2.6-.8 3-.1.5.2.5.4.4.2-.1 2.6-1.8 3.6-2.5.7.1 1.4.2 2.1.2 5.5 0 10-3.5 10-7.8S17.5 3 12 3z"/></svg></a>')
+    if insta:
+        btns.append(f'<a class="sns-fab sns-insta" href="{insta}" target="_blank" rel="noopener" aria-label="인스타그램">'
+                    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="#fff" stroke="none"/></svg></a>')
+    if blog:
+        btns.append(f'<a class="sns-fab sns-blog" href="{blog}" target="_blank" rel="noopener" aria-label="블로그"><b>blog</b></a>')
+    if phone:
+        tel = "tel:" + phone.replace(" ", "")
+        btns.append(f'<a class="sns-fab sns-phone" href="{tel}" aria-label="전화 상담">'
+                    '<svg viewBox="0 0 24 24" width="23" height="23" fill="#fff"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.2 2.2z"/></svg></a>')
+    if not btns:
+        widget = ""
+    else:
+        css = ('<style>.sns-float{position:fixed;right:18px;bottom:24px;z-index:9000;display:flex;flex-direction:column;gap:12px}'
+               '.sns-fab{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;'
+               'box-shadow:0 6px 16px rgba(0,0,0,.18);transition:transform .18s ease;text-decoration:none}'
+               '.sns-fab:hover{transform:translateY(-3px)}'
+               '.sns-kakao{background:#FEE500}.sns-insta{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}'
+               '.sns-blog{background:#03C75A}.sns-blog b{color:#fff;font-size:13px;font-weight:800;font-style:normal}'
+               '.sns-phone{background:#0C9384}'
+               '@media(max-width:767px){.sns-float{right:12px;bottom:16px}.sns-fab{width:48px;height:48px}}</style>')
+        widget = '<!--sns-float-->' + css + '<div class="sns-float">' + "".join(btns) + '</div><!--/sns-float-->'
+    for f in _all_html_files():
+        s = (ROOT / f).read_text(encoding="utf-8")
+        s = re.sub(r'<!--sns-float-->.*?<!--/sns-float-->', '', s, flags=re.S)
+        if widget:
+            s = s.replace("</body>", widget + "\n</body>", 1)
+        (ROOT / f).write_text(s, encoding="utf-8")
+    return len(btns)
+
+
 # ---------- 히어로 (홈 bw-slide) ----------
 def _title_to_h2(t):
     # dfirst UI 규칙: *단어*=강조, 줄바꿈=<br>  →  우리 h2(<b>+<br>)

@@ -193,6 +193,16 @@
       </div>
 
       <div class="panel">
+        <h2>플로팅 SNS 버튼</h2>
+        <div class="desc">사이트 우측 하단에 뜨는 원형 버튼입니다. <b>링크를 넣은 것만</b> 노출되고, 비우면 숨겨집니다.</div>
+        <div class="field"><label>카카오톡 채널·오픈채팅 URL</label><input id="snsKakao" placeholder="https://pf.kakao.com/..."></div>
+        <div class="field"><label>인스타그램 URL</label><input id="snsInstagram" placeholder="https://instagram.com/..."></div>
+        <div class="field"><label>블로그 URL</label><input id="snsBlog" placeholder="https://blog.naver.com/..."></div>
+        <div class="field"><label>전화번호 (자동 tel: 링크)</label><input id="snsPhone" placeholder="1600-9487"></div>
+        <button class="btn" id="snsSave" type="button">SNS 버튼 저장</button>
+      </div>
+
+      <div class="panel">
         <h2>이메일 알림 (견적 문의)</h2>
         <div class="desc" style="margin:0 0 4px">홈 견적 폼으로 문의가 접수되면 지정한 이메일로 알림을 보냅니다. <b>Gmail 기준</b>이며, 보안을 위해 일반 비밀번호가 아닌 <b>앱 비밀번호</b>가 필요합니다.</div>
         <div class="size-hint">🔑 <b>앱 비밀번호 만드는 법</b> — 구글 계정 → 보안 → 2단계 인증 켜기 → <b>앱 비밀번호</b> 생성(16자리). 그 16자리를 아래에 붙여넣으세요. (구글 계정 비밀번호 아님)</div>
@@ -256,6 +266,20 @@
   });
   // 소스 입력/붙여넣기 → 비주얼 편집기에 실시간 반영(저장은 colEditor.innerHTML을 읽으므로 항상 최신)
   src.addEventListener('input', function () { ed.innerHTML = src.value; });
+})();
+</script>
+<script id="sns-handler">
+(function(){
+  function api(p,o){o=o||{};o.credentials='include';if(o.body&&typeof o.body!=='string'){o.headers=Object.assign({'Content-Type':'application/json'},o.headers||{});o.body=JSON.stringify(o.body);}return fetch((window.API_BASE||'')+p,o).then(function(r){return r.json().catch(function(){return{};});});}
+  function load(){api('/api/settings').then(function(s){['snsKakao','snsInstagram','snsBlog','snsPhone'].forEach(function(k){var el=document.getElementById(k);if(el)el.value=s[k]||'';});});}
+  var nav=document.querySelector('.side nav a[data-tab="seo"]');
+  if(nav)nav.addEventListener('click',function(){setTimeout(load,350);});
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.id==='snsSave'){
+      var b={};['snsKakao','snsInstagram','snsBlog','snsPhone'].forEach(function(k){var el=document.getElementById(k);b[k]=el?el.value.trim():'';});
+      api('/api/settings',{method:'PATCH',body:b}).then(function(){var t=document.getElementById('toast');if(t){t.textContent='SNS 버튼 저장됨 (사이트 반영)';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}});
+    }
+  });
 })();
 </script>
 </body>
