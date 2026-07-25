@@ -119,7 +119,7 @@
   function loadPf() {
     api('/api/portfolio').then(function (list) {
       $('#pfWrap').innerHTML = list.map(function (p) {
-        return '<div class="pfc"><div class="th" style="background-image:url(\'' + esc(p.image) + '\')"></div><div class="b"><div class="c">' + esc(p.category) + '</div><div class="t">' + esc(p.title) + '</div><div class="row"><button class="btn del sm" data-del="' + p.id + '">삭제</button></div></div></div>';
+        return '<div class="pfc"><div class="th" style="background-image:url(\'' + (window.API_BASE||'') + '/' + esc(p.image) + '\')"></div><div class="b"><div class="c">' + esc(p.category) + '</div><div class="t">' + esc(p.title) + '</div><div class="row"><button class="btn del sm" data-del="' + p.id + '">삭제</button></div></div></div>';
       }).join('') || '<p style="color:#6b6f66">작업이 없습니다.</p>';
       $$('#pfWrap [data-del]').forEach(function (b) { b.addEventListener('click', function () { if (!confirm('이 작업을 삭제할까요?')) return; api('/api/portfolio/' + b.getAttribute('data-del'), { method: 'DELETE' }).then(function () { toast('삭제됨'); loadPf(); }); }); });
     }).catch(function () {});
@@ -139,7 +139,7 @@
     api('/api/columns').then(function (list) {
       var rows = list.map(function (c) {
         var th = c.thumbnail || c.image || '';
-        var thumbCell = th ? '<div style="width:56px;height:42px;border-radius:6px;background:#eee url(\'' + esc(th) + '\') center/cover"></div>' : '<div style="width:56px;height:42px;border-radius:6px;background:var(--paper)"></div>';
+        var thumbCell = th ? '<div style="width:56px;height:42px;border-radius:6px;background:#eee url(\'' + (window.API_BASE||'') + '/' + esc(th) + '\') center/cover"></div>' : '<div style="width:56px;height:42px;border-radius:6px;background:var(--paper)"></div>';
         var draftBadge = c.status === 'draft' ? ' <span class="st inprogress" style="font-size:11px">임시저장</span>' : '';
         return '<tr><td>' + thumbCell + '</td><td><b>' + esc(c.title) + '</b>' + draftBadge + '<br><span class="msg">' + esc(c.excerpt) + '</span></td><td>' + esc(c.category) + '</td><td>' + fmt(c.createdAt) + '</td><td><button class="btn ghost sm" data-edit="' + c.id + '">수정</button> <button class="btn del sm" data-del="' + c.id + '">삭제</button></td></tr>';
       }).join('');
@@ -219,7 +219,7 @@
     $('#coverUp').addEventListener('click', function () {
       var f = $('#coverFile').files[0]; if (!f) { toast('커버 이미지를 선택하세요'); return; }
       var fd = new FormData(); fd.append('file', f);
-      api('/api/upload', { method: 'POST', body: fd }).then(function (r) { if (r.url) { coverUrl = r.url; $('#coverPrev').style.backgroundImage = "url('/" + r.url + "')"; toast('커버 업로드됨'); } });
+      api('/api/upload', { method: 'POST', body: fd }).then(function (r) { if (r.url) { coverUrl = r.url; $('#coverPrev').style.backgroundImage = "url('" + (window.API_BASE||'') + "/" +r.url + "')"; toast('커버 업로드됨'); } });
     });
     $('#coverClear').addEventListener('click', function () { coverUrl = ''; $('#coverPrev').style.backgroundImage = ''; });
   }
@@ -269,7 +269,7 @@
     var raw = localStorage.getItem(DRAFT_KEY); if (!raw) return; var d = JSON.parse(raw);
     editingCol = d.editingCol || null;
     $('#colTitle').value = d.title || ''; $('#colCat').value = d.cat || 'Column'; $('#colExcerpt').value = d.excerpt || '';
-    if (colEditor) colEditor.innerHTML = d.body || ''; coverUrl = d.cover || ''; $('#coverPrev').style.backgroundImage = coverUrl ? "url('/" + coverUrl + "')" : '';
+    if (colEditor) colEditor.innerHTML = d.body || ''; coverUrl = d.cover || ''; $('#coverPrev').style.backgroundImage = coverUrl ? "url('" + (window.API_BASE||'') + "/" +coverUrl + "')" : '';
     $('#colDraftNote').classList.add('hide');
     if (editingCol) { $('#colFormTitle').textContent = '글 수정'; $('#colSave').textContent = '수정 저장'; $('#colCancel').classList.remove('hide'); }
     toast('이어서 작성합니다');
@@ -282,7 +282,7 @@
     var body = c.body || '';
     if (/<[a-z][\s\S]*>/i.test(body)) colEditor.innerHTML = body;
     else colEditor.innerHTML = body.split(/\n{2,}/).map(function (p) { return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('') || '<p></p>';
-    coverUrl = c.thumbnail || c.image || ''; $('#coverPrev').style.backgroundImage = coverUrl ? "url('/" + coverUrl + "')" : '';
+    coverUrl = c.thumbnail || c.image || ''; $('#coverPrev').style.backgroundImage = coverUrl ? "url('" + (window.API_BASE||'') + "/" +coverUrl + "')" : '';
     $('#colFormTitle').textContent = '글 수정'; $('#colSave').textContent = '수정 저장'; $('#colCancel').classList.remove('hide');
     window.scrollTo(0, 0);
   }
@@ -403,7 +403,7 @@
         var badge = it.overridden ? '<span class="st done" style="font-size:11px">변경됨</span>' : '';
         var revert = it.overridden ? '<button class="btn del sm" data-revert="' + esc(it.original) + '">되돌리기</button>' : '';
         return '<div class="img-cell">' +
-          '<div class="img-thumb" style="background-image:url(\'/' + esc(it.src) + '?t=' + Date.now() + '\')"></div>' +
+          '<div class="img-thumb" style="background-image:url(\'' + (window.API_BASE||'') + '/' + esc(it.src) + '?t=' + Date.now() + '\')"></div>' +
           '<div class="img-meta">' + esc(it.alt || ('사진 ' + (i + 1))) + ' ' + badge + '</div>' +
           '<div class="img-act"><label class="btn sm">이미지 변경<input type="file" accept="image/*" data-up="' + esc(it.original) + '" hidden></label>' + revert + '</div>' +
           '</div>';
