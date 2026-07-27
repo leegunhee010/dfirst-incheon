@@ -458,15 +458,21 @@ def content_save(page):
         orig, new = _clean(e.get("orig", "")), _clean(e.get("new", ""))
         if not orig or orig == new:
             continue
-        if orig in s:
-            s = s.replace(orig, new, 1)
-        else:
-            m = re.search(_pattern(orig), s)
-            if not m:
-                # 예전엔 조용히 건너뛰어 "저장됐다"고 착각하게 됐음 → 사용자에게 알림
-                skipped.append(re.sub(r"<[^>]+>", " ", orig).strip()[:40])
+        # 태그 포함(outerHTML) 우선 매칭 — 같은 문구가 alt 속성 등 앞쪽에 있어도 정확한 위치에만 적용
+        oo, no = _clean(e.get("origOuter", "")), _clean(e.get("newOuter", ""))
+        done = False
+        for a, b in ((oo, no), (orig, new)):
+            if not a:
                 continue
-            s = s[:m.start()] + new + s[m.end():]
+            if a in s:
+                s = s.replace(a, b, 1); done = True; break
+            m = re.search(_pattern(a), s)
+            if m:
+                s = s[:m.start()] + b + s[m.end():]; done = True; break
+        if not done:
+            # 예전엔 조용히 건너뛰어 "저장됐다"고 착각하게 됐음 → 사용자에게 알림
+            skipped.append(re.sub(r"<[^>]+>", " ", orig).strip()[:40])
+            continue
         # 기존 오버라이드 중 new==orig(재편집)면 갱신, 아니면 추가 (원본 보존)
         merged = False
         for o in ov:
@@ -723,7 +729,11 @@ EDIT_JS = """
                              .replace(/\\s*contenteditable="(?:true|false)"/g,'');}
     els.forEach(function(el){
       var o=clean(el.getAttribute('data-orig')),n=clean(el.innerHTML);
-      if(o!==n)edits.push({orig:o,new:n});
+      if(o===n)return;
+      // 문구만 보내면 같은 문자열이 이미지 alt 등 앞쪽에 있을 때 엉뚱한 곳이 바뀜
+      // → 태그까지 포함한 outerHTML을 함께 보내 위치를 특정
+      var newOuter=clean(el.outerHTML), origOuter=newOuter.replace(n,o);
+      edits.push({orig:o,new:n,origOuter:origOuter,newOuter:newOuter});
     });
     if(!edits.length){alert('변경된 문구가 없습니다.');return;}
     var page=location.pathname.replace(/^\\//,'')||'index.html';
