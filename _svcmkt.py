@@ -26,11 +26,11 @@ KEYWORDS = ("인천 마케팅 대행, 블로그 운영대행, 인스타그램 �
 SUB = ('인천 기업의 마케팅, 광고가 아닌 콘텐츠로 찾게 만듭니다.<br/>'
        '<span class="g">블로그·인스타그램·숏폼·언론홍보까지 한 팀이 운영합니다.</span>')
 
-# 히어로 아래 포폴 롤링 (본사 마케팅 배너 크롭 + 콘텐츠 성격 자산 믹스)
-ROLL = [M + "mkt-blog.jpg", P + "pf_1780560331761_d8ccf30c.png",
-        M + "mkt-insta.jpg", P + "g04.jpg",
-        M + "mkt-short.jpg", P + "pf_1780560349800_ca2e5f7c.png",
-        M + "mkt-press.jpg", P + "pf_1781576786008_68ef4688.jpg"]
+# 히어로 아래 롤링 — 마케팅은 실제 포폴이 없어 채널 카드를 굽어 사용(_mktcards.py)
+# (2026-07-27 사용자 "마케팅은 지금 포폴이 없으니까 그냥 사진을 만들던지 해서 적용해")
+# ⚠️무관한 인쇄·촬영 포폴을 마케팅 작업물처럼 섞어 쓰던 것 폐기
+ROLL = [M + "card-blog.jpg", M + "card-insta.jpg", M + "card-baepo.jpg", M + "card-top.jpg",
+        M + "card-perf.jpg", M + "card-short.jpg", M + "card-press.jpg"]
 
 # 소개 글 2개 (subsvc.css .ss-item 재사용 — 본사 마케팅 페이지 핵심 카피 요약)
 INTRO = [
