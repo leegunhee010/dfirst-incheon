@@ -161,3 +161,7 @@
 .svc-block{scroll-margin-top:96px}
 .nav-item-dd>a .caret{margin-top:1px}
 @media (max-width:1366px){.nav-menu .nav-dd-inner a{font-size:14px;padding:10px 14px}}
+
+/* hdr-wide: 헤더 폭을 히어로(1560px)와 정렬 (2026-07-27 사용자 "헤더 영역 히어로 사이즈에 맞춰 늘려") */
+.header-inner{max-width:1560px;padding:0 32px}
+@media (max-width:1366px){.header-inner{padding:0 32px}}  /* common.css 40px 오버라이드 — 히어로 32px와 유지 */
