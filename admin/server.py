@@ -438,9 +438,14 @@ def content_save(page):
         h = re.sub(r"<div[^>]*>", "<br>", h).replace("</div>", "")
         return h
 
+    skipped = []
     for e in edits:
         orig, new = _clean(e.get("orig", "")), _clean(e.get("new", ""))
-        if not orig or orig == new or orig not in s:
+        if not orig or orig == new:
+            continue
+        if orig not in s:
+            # 원문을 못 찾으면 예전엔 조용히 건너뛰어 "저장됐다"고 착각하게 됐음 → 사용자에게 알림
+            skipped.append(re.sub(r"<[^>]+>", " ", orig).strip()[:40])
             continue
         s = s.replace(orig, new, 1)
         # 기존 오버라이드 중 new==orig(재편집)면 갱신, 아니면 추가 (원본 보존)
@@ -454,7 +459,7 @@ def content_save(page):
     p.write_text(s, encoding="utf-8")
     ovall[key] = ov
     jsave("content", ovall)
-    return jsonify({"ok": True, "count": applied})
+    return jsonify({"ok": True, "count": applied, "skipped": skipped})
 
 @app.delete("/api/content/<page>")
 @require
@@ -702,9 +707,22 @@ EDIT_JS = """
     var page=location.pathname.replace(/^\\//,'')||'index.html';
     fetch('/api/content/'+encodeURIComponent(page),{method:'POST',credentials:'same-origin',
       headers:{'Content-Type':'application/json'},body:JSON.stringify({edits:edits})})
-      .then(function(r){return r.json();}).then(function(r){
-        if(r.ok){alert(r.count+'곳 저장·반영되었습니다.');location.reload();}
-        else alert(r.error||'저장 실패');});
+      .then(function(r){
+        if(r.status===401){throw new Error('로그인이 풀렸습니다. 관리자에 다시 로그인한 뒤 저장하세요.');}
+        return r.json();}).then(function(r){
+        if(!r.ok){alert(r.error||'저장 실패');return;}
+        if(r.skipped&&r.skipped.length){
+          // 실패분이 있으면 페이지를 새로고침하지 않음 → 수정 내용이 화면에 남아 다시 저장 가능
+          alert(r.count+'곳 저장됨.\\n\\n⚠️ 아래 '+r.skipped.length+'곳은 반영되지 않았습니다:\\n· '
+                +r.skipped.join('\\n· ')+'\\n\\n화면의 수정 내용은 유지됩니다. 다시 [저장]을 눌러보시고,'
+                +' 계속 실패하면 담당자에게 알려주세요.');
+          return;
+        }
+        alert(r.count+'곳 저장·반영되었습니다.');location.reload();})
+      .catch(function(err){
+        // 예전엔 서버가 꺼져 있으면 아무 반응 없이 조용히 실패했음
+        alert('저장하지 못했습니다: '+(err&&err.message||err)+'\\n\\n수정 내용은 화면에 그대로 있으니'
+              +' 창을 닫지 마시고, 문제 해결 후 다시 [저장]을 눌러주세요.');});
   };
 })();
 </script>
