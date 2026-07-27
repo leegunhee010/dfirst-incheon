@@ -183,7 +183,7 @@
         </div>
         <hr class="ct-form-divider">
         <form class="ct-form" action="#" method="post" enctype="multipart/form-data">
-            <input type="hidden" id="poedit_inquiry_nonce" name="poedit_inquiry_nonce" value="8bc13ce134" /><input type="hidden" name="_wp_http_referer" value="/contact/" />            <div class="ct-form-row ct-form-row-4">
+            <div class="ct-form-row ct-form-row-4">
                 <div class="ct-field">
                     <label class="ct-field-label">회사/소속 <span class="ct-req">*</span></label>
                     <input type="text" name="company" required>
@@ -284,6 +284,21 @@
             </div>
             <!-- 실제 전송용 hidden file inputs -->
             <div id="fileInputs" style="display:none;"></div>
+            <div class="ct-privacy">
+                <label class="ct-privacy-check">
+                    <input type="checkbox" id="privacyAgree" name="privacy_agree" required>
+                    <span><b>[필수]</b> 개인정보 수집 · 이용에 동의합니다.</span>
+                </label>
+                <details class="ct-privacy-detail">
+                    <summary>수집 항목 및 이용 목적 보기</summary>
+                    <div>
+                        <p><b>수집 항목</b> : 회사명, 담당자명, 연락처, 이메일, 문의 내용 및 첨부 파일</p>
+                        <p><b>이용 목적</b> : 문의 접수 확인 및 상담 · 견적 안내</p>
+                        <p><b>보유 기간</b> : 상담 종료 후 3년 (관련 법령에 따름)</p>
+                        <p class="ct-privacy-note">동의를 거부하실 수 있으나, 이 경우 상담 접수가 제한됩니다.</p>
+                    </div>
+                </details>
+            </div>
             <button type="submit" class="ct-submit">접수하기</button>
         </form>
     </div>
@@ -319,6 +334,7 @@
         var lines = [];
         form.querySelectorAll('input, select, textarea').forEach(function(el){
             if(el.type === 'file' || el.type === 'submit') return;
+            if(el.name === 'privacy_agree') return;   // 동의 여부는 메일 본문에 넣지 않음
             if((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
             var label = el.closest('.ct-field') ? (el.closest('.ct-field').querySelector('.ct-field-label')||{}).textContent : el.name;
             var val = el.value;
