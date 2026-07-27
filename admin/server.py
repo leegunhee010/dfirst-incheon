@@ -438,16 +438,35 @@ def content_save(page):
         h = re.sub(r"<div[^>]*>", "<br>", h).replace("</div>", "")
         return h
 
+    def _pattern(o):
+        """브라우저 innerHTML과 파일 원문의 사소한 표기 차이를 흡수하는 매칭 패턴.
+        (&↔&amp;, <br/>↔<br>, 따옴표 " ↔ ', 공백·줄바꿈 차이로 저장이 실패하던 문제)"""
+        out = []
+        for part in re.split(r"(\s+)", o):
+            if not part:
+                continue
+            if not part.strip():
+                out.append(r"\s+"); continue
+            q = re.escape(part)
+            q = q.replace(r"\&amp;", "\x00").replace(r"\&", "&").replace("\x00", "&(?:amp;)?")
+            q = q.replace('"', "[\"']").replace(">", r"\s*/?>")
+            out.append(q)
+        return "".join(out)
+
     skipped = []
     for e in edits:
         orig, new = _clean(e.get("orig", "")), _clean(e.get("new", ""))
         if not orig or orig == new:
             continue
-        if orig not in s:
-            # 원문을 못 찾으면 예전엔 조용히 건너뛰어 "저장됐다"고 착각하게 됐음 → 사용자에게 알림
-            skipped.append(re.sub(r"<[^>]+>", " ", orig).strip()[:40])
-            continue
-        s = s.replace(orig, new, 1)
+        if orig in s:
+            s = s.replace(orig, new, 1)
+        else:
+            m = re.search(_pattern(orig), s)
+            if not m:
+                # 예전엔 조용히 건너뛰어 "저장됐다"고 착각하게 됐음 → 사용자에게 알림
+                skipped.append(re.sub(r"<[^>]+>", " ", orig).strip()[:40])
+                continue
+            s = s[:m.start()] + new + s[m.end():]
         # 기존 오버라이드 중 new==orig(재편집)면 갱신, 아니면 추가 (원본 보존)
         merged = False
         for o in ov:
@@ -670,6 +689,9 @@ EDIT_JS = """
     [].slice.call(root.querySelectorAll('*')).forEach(function(el){
       if(SKIP[el.tagName]||el.closest('#__cebar')||el.closest('nav')||el.closest('svg'))return;
       if(el.matches&&el.matches(LIVE))return;
+      // svg 아이콘을 품은 요소는 제외 — 브라우저 직렬화가 파일 원문과 달라 저장이 실패하고,
+      // 편집 중 아이콘이 깨질 수 있음(버튼 문구 등)
+      if(el.querySelector&&el.querySelector('svg'))return;
       if(el.isContentEditable&&el.getAttribute('data-ce'))return;
       // 부모가 이미 텍스트 잎사귀면(=인라인 자식) 제외 → 중첩 편집 방지, 줄 전체만 편집
       if(el.parentElement&&isLeaf(el.parentElement))return;
