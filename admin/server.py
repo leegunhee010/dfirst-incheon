@@ -428,8 +428,18 @@ def content_save(page):
     ovall = jload("content", {})
     ov = ovall.get(key, [])
     applied = 0
+
+    def _clean(h):
+        """편집기 표식 제거 + contenteditable이 넣는 <div>줄바꿈을 <br>로 정규화.
+        (표식이 정적 파일에 구워지고 <p> 안에 <div>가 들어가 마크업이 깨지던 문제 방지)"""
+        h = re.sub(r'\s*data-ce="1"', "", h)
+        h = re.sub(r'\s*data-orig="[^"]*"', "", h)
+        h = re.sub(r'\s*contenteditable="(?:true|false)"', "", h)
+        h = re.sub(r"<div[^>]*>", "<br>", h).replace("</div>", "")
+        return h
+
     for e in edits:
-        orig, new = e.get("orig", ""), e.get("new", "")
+        orig, new = _clean(e.get("orig", "")), _clean(e.get("new", ""))
         if not orig or orig == new or orig not in s:
             continue
         s = s.replace(orig, new, 1)
@@ -664,10 +674,19 @@ EDIT_JS = """
     '<button id="__cesave">저장 · 사이트 반영</button><button id="__ceclose">닫기</button>';
   document.body.appendChild(bar);
   document.getElementById('__ceclose').onclick=function(){location.href=location.pathname;};
+  // 링크로 감싼 문구(강점카드 등)는 클릭 시 이동해버려 편집이 안 됨 → 편집모드에선 이동 차단
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a');
+    if(a&&!a.closest('#__cebar')){e.preventDefault();
+      var ce=e.target.closest('[data-ce]'); if(ce)ce.focus();}
+  },true);
   document.getElementById('__cesave').onclick=function(){
     var edits=[];
+    // 편집기 표식(data-ce/data-orig/contenteditable)이 자식에 붙어 저장본에 구워지던 문제 → 비교·전송 전 제거
+    function clean(h){return h.replace(/\\s*data-ce="1"/g,'').replace(/\\s*data-orig="[^"]*"/g,'')
+                             .replace(/\\s*contenteditable="(?:true|false)"/g,'');}
     els.forEach(function(el){
-      var o=el.getAttribute('data-orig'),n=el.innerHTML;
+      var o=clean(el.getAttribute('data-orig')),n=clean(el.innerHTML);
       if(o!==n)edits.push({orig:o,new:n});
     });
     if(!edits.length){alert('변경된 문구가 없습니다.');return;}
