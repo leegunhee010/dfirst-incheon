@@ -103,7 +103,7 @@ def bake_faq(page):
 
 # ---------- 사이트 설정(Head 코드·파비콘·대표이미지) ----------
 ALL_SITE_PAGES = ["index", "about", "portfolio", "column", "contact",
-                  "svc-brand", "svc-ppt", "svc-web", "svc-studio",
+                  "svc-brand", "svc-ppt", "svc-web", "svc-studio", "svc-mkt",
                   "catalog", "leaflet", "pamphlet", "brochure", "poster",
                   "column-design", "column-catalog", "column-logo", "column-print"]
 

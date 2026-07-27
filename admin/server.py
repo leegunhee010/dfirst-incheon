@@ -401,7 +401,8 @@ COPY_PAGES = [("index", "홈"), ("about", "회사소개"),
               ("catalog", "카탈로그"), ("leaflet", "리플렛"), ("pamphlet", "팜플렛"),
               ("brochure", "브로슈어"), ("poster", "포스터"),
               ("svc-brand", "브랜딩·로고"), ("svc-ppt", "PPT·제안서"),
-              ("svc-web", "홈페이지·웹"), ("svc-studio", "촬영·스튜디오")]
+              ("svc-web", "홈페이지·웹"), ("svc-studio", "촬영·스튜디오"),
+              ("svc-mkt", "마케팅·광고")]
 
 def _cpkey(page):
     return page[:-5] if page.endswith(".html") else page

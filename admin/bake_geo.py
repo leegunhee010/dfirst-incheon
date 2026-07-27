@@ -11,7 +11,7 @@ GEO = (37.4514027, 126.7050163)
 
 # LocalBusiness 삽입 대상 — 전 페이지(블로그·목록 포함, 회사 엔티티 사이트 전역)
 GEO_PAGES = ["index", "about", "portfolio", "contact", "column",
-             "svc-brand", "svc-ppt", "svc-web", "svc-studio",
+             "svc-brand", "svc-ppt", "svc-web", "svc-studio", "svc-mkt",
              "catalog", "leaflet", "pamphlet", "brochure", "poster",
              "column-design", "column-catalog", "column-logo", "column-print"]
 
