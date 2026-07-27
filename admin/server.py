@@ -656,11 +656,15 @@ EDIT_JS = """
     for(var i=0;i<el.children.length;i++){if(!INLINE[el.children[i].tagName])return false;}
     return true;
   }
+  // 사이트 JS가 실시간으로 값을 바꾸는 요소(슬라이더 카운터 등)는 제외 —
+  // 편집 당시 화면 상태가 그대로 저장돼 첫 화면이 02/03부터 시작하던 문제 방지
+  var LIVE='.bw-count, .bw-count *, .counter, [data-count], .swiper-pagination, .swiper-pagination *';
   var roots=[].slice.call(document.querySelectorAll('main, .cta-section, .cta2, .ct-faq'));
   var set=[];
   roots.forEach(function(root){
     [].slice.call(root.querySelectorAll('*')).forEach(function(el){
       if(SKIP[el.tagName]||el.closest('#__cebar')||el.closest('nav')||el.closest('svg'))return;
+      if(el.matches&&el.matches(LIVE))return;
       if(el.isContentEditable&&el.getAttribute('data-ce'))return;
       // 부모가 이미 텍스트 잎사귀면(=인라인 자식) 제외 → 중첩 편집 방지, 줄 전체만 편집
       if(el.parentElement&&isLeaf(el.parentElement))return;
