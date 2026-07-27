@@ -674,6 +674,11 @@ EDIT_JS = """
     '<button id="__cesave">저장 · 사이트 반영</button><button id="__ceclose">닫기</button>';
   document.body.appendChild(bar);
   document.getElementById('__ceclose').onclick=function(){location.href=location.pathname;};
+  // 사이트 JS(드래그 스크롤 등)가 mousedown에 preventDefault를 걸면 캐럿이 아예 안 잡힘
+  // → 편집 대상 위에서는 그 핸들러에 이벤트가 닿기 전에 차단 (강점카드가 편집 안 되던 실제 원인)
+  document.addEventListener('mousedown',function(e){
+    if(e.target.closest&&e.target.closest('[data-ce]'))e.stopPropagation();
+  },true);
   // 링크로 감싼 문구(강점카드 등)는 클릭 시 이동해버려 편집이 안 됨 → 편집모드에선 이동 차단
   document.addEventListener('click',function(e){
     var a=e.target.closest&&e.target.closest('a');
