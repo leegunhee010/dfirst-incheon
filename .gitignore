@@ -1,9 +1,9 @@
-# Python
+# ===== Python (로컬 빌드·관리자 스크립트) =====
 __pycache__/
 *.pyc
 *.pyo
 
-# 관리자 런타임 임시
+# ===== 관리자 런타임 임시파일 =====
 admin/data/*.log
 *.log
 ck.txt
@@ -14,13 +14,30 @@ hs.json
 so.json
 fq.json
 
-# OS
-Thumbs.db
-.DS_Store
-
-# 관리자 인증정보(비번 해시) — 저장소 제외
+# ===== 관리자 인증정보(비밀번호 해시) — 저장소 제외 =====
 admin/data/auth.json
 admin/data/admins.json
 
-# 빌드 참고용 원본 백업 — 로컬에만 보관(공유 저장소에서 제외)
+# ===== 빌드 참고용 원본 백업 — 로컬에만 보관 =====
 _src/
+
+# ===== OS / 에디터 =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ===== 압축·의존성·환경 =====
+*.zip
+*.tar.gz
+*.rar
+node_modules/
+vendor/
+.env
+
+# ===== CodeIgniter 4 런타임 (서버) =====
+writable/cache/*
+writable/logs/*
+writable/debugbar/*
