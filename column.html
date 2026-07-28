@@ -233,6 +233,20 @@
     var input = document.getElementById('blog-search-input');
     var empty = document.querySelector('.blog-empty');
     var curCat = 'all';
+    /* 카테고리 개수를 실제 글에서 계산 (2026-07-28)
+       기존엔 (4)(1)(2)(1)처럼 숫자가 HTML에 박혀 있어 관리자로 글을 추가해도 갱신되지 않았음.
+       목록에 없는 카테고리 항목은 숨겨 빈 카테고리가 남지 않게 한다. */
+    (function countCats() {
+        cats.forEach(function (li) {
+            var key = li.getAttribute('data-cat');
+            var n = key === 'all' ? items.length
+                  : [].slice.call(items).filter(function (it) {
+                        return it.getAttribute('data-cat') === key; }).length;
+            var el = li.querySelector('.blog-cat-count');
+            if (el) el.textContent = '(' + n + ')';
+            if (key !== 'all' && n === 0) li.style.display = 'none';
+        });
+    })();
     function apply() {
         var q = (input.value || '').trim().toLowerCase();
         var shown = 0;

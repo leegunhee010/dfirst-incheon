@@ -245,7 +245,38 @@ def bake_hero():
 DOMAIN = "https://incheondesign.co.kr"
 
 def _slugfile(c):
-    return f"col-{c['id']}.html"
+    # 기존 글(빌드 스크립트 생성분)은 file 필드로 원래 파일명을 유지 —
+    # col-N.html로 바뀌면 이미 검색에 등록된 URL이 깨진다(2026-07-28)
+    return c.get("file") or f"col-{c['id']}.html"
+
+def _update_builtin(c):
+    """builtin 글(기존 정적 칼럼)을 제자리 갱신 — 제목·요약·본문만 바꾸고
+    목차·FAQ·구조화데이터·크롬은 그대로 둔다."""
+    p = ROOT / c["file"]
+    if not p.exists():
+        return
+    s = p.read_text(encoding="utf-8")
+    title, excerpt = c["title"], c.get("excerpt", "")
+    s = re.sub(r'<title>.*?</title>', f'<title>{title} | 퍼스트디자인 인천지사</title>', s, count=1, flags=re.S)
+    s = re.sub(r'(<meta name="description" content=")[^"]*(")', lambda m: m.group(1) + excerpt + m.group(2), s)
+    s = re.sub(r'(<meta property="og:title" content=")[^"]*(")', lambda m: m.group(1) + title + m.group(2), s)
+    s = re.sub(r'(<meta property="og:description" content=")[^"]*(")', lambda m: m.group(1) + excerpt + m.group(2), s)
+    s = re.sub(r'(<h1[^>]*>).*?(</h1>)', lambda m: m.group(1) + title + m.group(2), s, count=1, flags=re.S)
+    # 본문 교체 + 목차 재생성 (본문 컨테이너는 CTA·FAQ 앞에서 끝남)
+    body, toc, _items = _toc_and_body(c.get("body", ""))
+    start = s.find('<div class="blog-single-body">')
+    if start >= 0 and body.strip():
+        inner = start + len('<div class="blog-single-body">')
+        ends = [s.find(k, inner) for k in
+                ('<div class="blog-single-cta">', '<!--col-faq-->', '<section class="col-faq"',
+                 '<nav class="blog-single-nav"')]
+        ends = [e for e in ends if e > 0]
+        if ends:
+            s = s[:inner] + body + '</div>\n        ' + s[min(ends):]
+        if toc:
+            s = re.sub(r'(<ol class="blog-toc-list">).*?(</ol>)',
+                       lambda m: m.group(1) + toc + m.group(2), s, count=1, flags=re.S)
+    p.write_text(s, encoding="utf-8")
 
 def _toc_and_body(body_html):
     """본문 h2에 id 부여 + TOC 목록 생성."""
@@ -302,6 +333,11 @@ def bake_columns():
     # 템플릿 = 기존 블로그 상세(chrome+구조)
     tpl = (ROOT / "column-design.html").read_text(encoding="utf-8")
     for idx, c in enumerate(pub):
+        if c.get("builtin"):
+            # 기존 4글은 목차·FAQ·구조화데이터를 공들여 넣은 정적 파일이라
+            # 템플릿으로 통째로 덮으면 그 작업이 사라진다 → 본문·메타만 제자리 갱신
+            _update_builtin(c)
+            continue
         s = tpl
         title = c["title"]; cat = c.get("category", "Column")
         date = c.get("date", "2026-07-24"); excerpt = c.get("excerpt", "")
@@ -388,7 +424,8 @@ def bake_columns():
         f'<h3 class="blog-item-tit">{c["title"]}</h3>'
         f'<div class="blog-item-meta"><time class="blog-item-date">{c.get("date","2026-07-24").replace("-",".")}</time>'
         f'<span class="blog-item-readtime">{_read_time(c.get("body",""))}분 분량</span></div></div></a></article>'
-        for c in pub) + "<!--/adm-cols-->"
+        # builtin 글은 목록에 정적 카드가 이미 있어 또 넣으면 중복 노출된다(2026-07-28)
+        for c in pub if not c.get("builtin")) + "<!--/adm-cols-->"
     ls = re.sub(r'(<div class="blog-list">)', r'\1' + cards, ls, count=1)
     lp.write_text(ls, encoding="utf-8")
     return len(pub)
