@@ -16,7 +16,7 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           port: 2218
           script: |
-            echo "===== 开始部署 dfirst-incheon ====="
+            echo "===== 开始部署 dfirst-incheon1 ====="
             cd /opt/1panel/www/sites/dfirst-incheon.vigo.co.kr/index
             git pull origin main
             echo "===== dfirst-incheon 部署完成 ====="
