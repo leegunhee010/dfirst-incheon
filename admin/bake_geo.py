@@ -45,6 +45,62 @@ def localbusiness_ld(domain="https://incheondesign.co.kr"):
         "parentOrganization": {"@type": "Organization", "name": "㈜퍼스트마케팅컴퍼니"},
     }
 
+def organization_ld(domain="https://incheondesign.co.kr"):
+    """메인 전용 Organization 스키마 — AI·검색엔진이 '지역 업체'가 아니라
+    '회사 엔티티'로 인식하게 함(2026-07-28). ⚠️sameAs(SNS)는 실제 계정 확인 후 추가."""
+    return {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": domain + "/#organization",
+        "name": "퍼스트디자인 인천지사",
+        "legalName": "주식회사 퍼스트마케팅컴퍼니",
+        "url": domain + "/",
+        "logo": {"@type": "ImageObject", "url": domain + "/theme/assets/first/favicon.png"},
+        "image": domain + "/theme/assets/first/mainbanner0001.jpg",
+        "description": ("인천·부천·시흥 등 서부수도권 기업·관공서·교육기관을 위한 디자인 제작 전문. "
+                        "카탈로그·브로슈어·리플렛·포스터 인쇄물부터 로고·브랜딩, PPT·제안서, "
+                        "홈페이지·웹, 촬영, 마케팅까지 기획에서 납품까지 한 팀이 진행합니다."),
+        "telephone": PHONE,
+        "email": "work@firstmkt.co.kr",
+        "vatID": "884-88-01123",
+        "founder": {"@type": "Person", "name": "김우석"},
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "미래로 16 3층",
+            "addressLocality": "남동구",
+            "addressRegion": "인천광역시",
+            "postalCode": "21558",
+            "addressCountry": "KR",
+        },
+        "areaServed": [{"@type": "City", "name": n} for n in ("인천광역시", "부천시", "시흥시")],
+        "parentOrganization": {"@type": "Organization", "name": "㈜퍼스트마케팅컴퍼니"},
+        "contactPoint": [{
+            "@type": "ContactPoint",
+            "telephone": PHONE,
+            "email": "work@firstmkt.co.kr",
+            "contactType": "customer service",
+            "areaServed": "KR",
+            "availableLanguage": ["Korean"],
+        }],
+        "knowsAbout": ["카탈로그 제작", "브로슈어 제작", "리플렛 제작", "포스터 제작",
+                       "로고 디자인", "브랜딩", "PPT 제안서 디자인", "홈페이지 제작",
+                       "제품 촬영", "블로그 마케팅"],
+    }
+
+def bake_organization(domain="https://incheondesign.co.kr"):
+    """메인에 Organization 스키마 삽입(멱등)."""
+    domain = domain.rstrip("/")
+    p = ROOT / "index.html"
+    if not p.exists():
+        return 0
+    s = p.read_text(encoding="utf-8")
+    s = re.sub(r'<!--org-ld-->.*?<!--/org-ld-->', '', s, flags=re.S)
+    ld = ('<!--org-ld--><script type="application/ld+json">'
+          + json.dumps(organization_ld(domain), ensure_ascii=False) + '</script><!--/org-ld-->')
+    s = s.replace("</head>", ld + "\n</head>", 1)
+    p.write_text(s, encoding="utf-8")
+    return 1
+
 def bake_geo(domain="https://incheondesign.co.kr"):
     domain = domain.rstrip("/")
     ld = ('<!--localbiz--><script type="application/ld+json">'
@@ -72,3 +128,4 @@ def bake_geo(domain="https://incheondesign.co.kr"):
 
 if __name__ == "__main__":
     print("LocalBusiness 삽입·주소 갱신:", bake_geo(), "페이지")
+    print("Organization 스키마(메인):", bake_organization(), "페이지")

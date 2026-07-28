@@ -109,3 +109,28 @@
 .blog-single-nav-label{font-size:13px;color:#8a8a8a}
 .blog-single-nav-tit{font-size:15px;font-weight:600;line-height:1.5}
 @media (max-width:768px){.blog-single-tit{font-size:26px}.blog-single-body{font-size:15.5px}.blog-single-body h2{font-size:21px;margin:40px 0 16px}.blog-single-nav{grid-template-columns:1fr}}
+
+/* col-faq: 칼럼글 하단 FAQ (AEO — 화면 노출 + FAQPage 스키마 일치) */
+.col-faq { max-width: 780px; margin: 64px auto 0; padding: 0 0 8px; }
+.col-faq-t { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #111;
+             margin: 0 0 6px; padding-bottom: 18px; border-bottom: 2px solid #111; }
+.col-faq-s { font-size: 15px; color: #767676; margin: 14px 0 4px; }
+.col-faq-item { border-bottom: 1px solid #e6eceb; }
+.col-faq-item summary { display: flex; align-items: baseline; gap: 9px; cursor: pointer;
+    font-size: 17px; font-weight: 700; color: #111; padding: 20px 34px 20px 2px;
+    list-style: none; position: relative; word-break: keep-all; }
+.col-faq-item summary::-webkit-details-marker { display: none; }
+.col-faq-item summary::before { content: "Q."; color: #0C9384; font-weight: 800; flex: none; }
+.col-faq-item summary::after { content: "+"; position: absolute; right: 6px; top: 50%;
+    transform: translateY(-50%); font-size: 21px; color: #9aa7a5; transition: transform .2s ease; }
+.col-faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); color: #0C9384; }
+.col-faq-item h3 { font-size: inherit; font-weight: inherit; color: inherit; margin: 0; display: inline; }
+.col-faq-a { padding: 0 2px 24px 30px; font-size: 16px; color: #555; line-height: 1.85; }
+.col-faq-a p { margin: 0; word-break: keep-all; }
+.col-faq-a b { color: #222; font-weight: 700; }
+@media (max-width: 767px) {
+    .col-faq { margin-top: 44px; }
+    .col-faq-t { font-size: 20px; }
+    .col-faq-item summary { font-size: 15.5px; padding: 16px 30px 16px 2px; }
+    .col-faq-a { font-size: 14.5px; padding-left: 24px; }
+}
