@@ -38,10 +38,20 @@ MySQL
 CREATE DATABASE firstd_incheon DEFAULT CHARSET utf8mb4;
 ```
 ```bash
-mysql firstd_incheon < sql/schema.sql   # 테이블 11개
-mysql firstd_incheon < sql/seed.sql      # 현재 데이터(포폴 450·히어로 3·설정 등) + 관리자 계정
+mysql firstd_incheon < sql/schema.sql                 # 테이블 11개
+mysql firstd_incheon < sql/seed.sql                    # 포폴 450·히어로 3·설정 + 관리자 계정
+mysql firstd_incheon < sql/seed_data_2026-07-28.sql     # 칼럼 4글·카피 71건·SEO 14건 (최신 반영분)
 ```
+> **이미 예전 스키마로 설치한 서버라면** `schema.sql`을 다시 넣지 말고
+> `mysql firstd_incheon < sql/migrate_2026-07-28.sql` 만 실행하세요
+> (columns 테이블에 `file`·`builtin` 컬럼 추가).
+
 기본 관리자: **admin / admin1234** — 로그인 후 계정 탭에서 반드시 변경.
+
+**환경 확인** — 이 패키지는 **PHP 8.2 / CodeIgniter 4 / MySQL 5.6** 기준으로 검증했습니다.
+MySQL 5.6은 JSON 컬럼·생성 컬럼·표현식 DEFAULT를 지원하지 않아 전부 배제했고,
+utf8mb4 인덱스 키가 767바이트를 넘지 않도록 문자열 길이를 잡았습니다
+(검증: 저장소 루트 `python _ci4_check.py`).
 
 ### ② CI4 앱 병합
 - `app/Controllers/Api.php`, `app/Libraries/Bake.php` → 기존 CI4 프로젝트에 복사
@@ -96,3 +106,27 @@ admin.js 가 부르는 경로 그대로 CI4가 응답합니다. 프론트는 **a
 - 편집 결과는 **정적 HTML 파일에 직접** 쓰입니다(DB는 원본 데이터 보관용). 그래서 검색·AI가 소스를 그대로 읽음.
 - 이미지 리사이즈는 GD(`imagecreate*`) 사용 — PHP GD 확장 필요(대개 기본 탑재).
 - Flask 원본(참고용): `dfirst-incheon/admin/` (server.py = Api.php, bake*.py = Bake.php 대응).
+
+---
+
+## 5. 2026-07-28 반영 내역
+
+- **마케팅 · 광고 페이지(svc-mkt) 추가** — FAQ·SEO·카피 편집 대상 목록에 등록.
+- **칼럼 4글을 DB에 등록**(`seed_data_2026-07-28.sql`).
+  - `file` = 기존 파일명 유지 → 이미 검색에 잡힌 URL(`column-catalog.html` 등)이 깨지지 않음.
+  - `builtin=1` = 템플릿으로 통째 덮지 않고 제목·요약·본문만 제자리 갱신
+    (각 글의 목차·FAQ·구조화데이터를 보존하기 위함). Bake 이관 시 이 분기 필요.
+- **관리자 UI 버그 3건 수정**(`public/admin/admin.js`)
+  - 칼럼 '수정' 버튼 무반응 — 버튼 속성값(문자열)과 레코드 id(숫자) 비교 실패.
+  - 작성일 `NaN.NaN.NaN` — 저장 필드는 `date`인데 목록이 `createdAt`을 읽었음.
+  - 로그인 실패 안내 — 서버 연결 실패도 "비밀번호 오류"로 표시되던 것 분리.
+- **문의 폼 구조 변경** — 서비스 항목이 인쇄물 전용에서 실제 6종(브랜딩·인쇄·PPT·웹·촬영·마케팅)으로
+  바뀌고 개인정보 수집·이용 동의(필수)가 추가됨. 폼 저장 로직 이관 시 `privacy_agree` 필드는
+  메일 본문에서 제외하는 처리가 있습니다.
+- **연락처 일괄 변경** — 이메일 `work@firstmkt.co.kr`, 운영시간 `평일 09:00 ~ 18:00`.
+
+### ⚠️ 배포 전 확인 — 도메인
+현재 정적 파일의 canonical·og:url·구조화데이터는 **`https://incheondesign.co.kr`** 기준입니다.
+다른 도메인으로 서비스하면 검색엔진에 잘못된 주소를 알리게 되므로, 실제 도메인 확정 후
+관리자 → SEO 탭의 도메인 값을 바꾸고 전 페이지를 다시 굽거나
+`admin/bake_seo_tech.py`·`bake_geo.py`의 도메인을 수정해 재생성해야 합니다.

@@ -3,7 +3,13 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function fmt(iso) { try { var d = new Date(iso); return d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0'); } catch (e) { return ''; } }
+  function fmt(iso) {
+    // 값이 없거나 형식이 다르면 NaN.NaN.NaN으로 표시되던 것 방어(2026-07-28)
+    if (!iso) return '-';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return String(iso);
+    return d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+  }
   var STLABEL = { new: '신규', inprogress: '진행중', done: '완료' };
 
   function api(path, opts) {
@@ -29,7 +35,11 @@
     $('#loginErr').textContent = '';
     api('/api/login', { method: 'POST', body: { username: u, password: p } })
       .then(function (r) { if (r.ok) showApp(); else $('#loginErr').textContent = r.error || '로그인 실패'; })
-      .catch(function () { $('#loginErr').textContent = '아이디 또는 비밀번호가 올바르지 않습니다.'; });
+      .catch(function () {
+        // 연결 실패와 인증 실패를 구분(2026-07-28)
+        $('#loginErr').innerHTML = '관리자 서버에 연결할 수 없습니다.<br>' +
+          '<small style="color:#888">서버(PHP·DB) 상태를 확인해 주세요.</small>';
+      });
   }
   $('#loginBtn').addEventListener('click', doLogin);
   $('#p').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
@@ -141,7 +151,7 @@
         var th = c.thumbnail || c.image || '';
         var thumbCell = th ? '<div style="width:56px;height:42px;border-radius:6px;background:#eee url(\'' + esc(th) + '\') center/cover"></div>' : '<div style="width:56px;height:42px;border-radius:6px;background:var(--paper)"></div>';
         var draftBadge = c.status === 'draft' ? ' <span class="st inprogress" style="font-size:11px">임시저장</span>' : '';
-        return '<tr><td>' + thumbCell + '</td><td><b>' + esc(c.title) + '</b>' + draftBadge + '<br><span class="msg">' + esc(c.excerpt) + '</span></td><td>' + esc(c.category) + '</td><td>' + fmt(c.createdAt) + '</td><td><button class="btn ghost sm" data-edit="' + c.id + '">수정</button> <button class="btn del sm" data-del="' + c.id + '">삭제</button></td></tr>';
+        return '<tr><td>' + thumbCell + '</td><td><b>' + esc(c.title) + '</b>' + draftBadge + '<br><span class="msg">' + esc(c.excerpt) + '</span></td><td>' + esc(c.category) + '</td><td>' + fmt(c.date || c.createdAt) + '</td><td><button class="btn ghost sm" data-edit="' + c.id + '">수정</button> <button class="btn del sm" data-del="' + c.id + '">삭제</button></td></tr>';
       }).join('');
       $('#colWrap').innerHTML = list.length ? '<table><thead><tr><th></th><th>제목</th><th>카테고리</th><th>작성일</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p style="color:#6b6f66">글이 없습니다.</p>';
       window.__cols = list;
@@ -276,7 +286,9 @@
   });
   if ($('#draftDiscard')) $('#draftDiscard').addEventListener('click', clearAutosave);
   function startEdit(id) {
-    var c = (window.__cols || []).find(function (x) { return x.id === id; }); if (!c) return;
+    // data-edit 속성값은 문자열, 레코드 id는 숫자라서 === 비교가 항상 실패했음(2026-07-28)
+    var c = (window.__cols || []).find(function (x) { return String(x.id) === String(id); });
+    if (!c) { toast('글을 찾을 수 없습니다'); return; }
     editingCol = id;
     $('#colTitle').value = c.title; $('#colCat').value = c.category; $('#colExcerpt').value = c.excerpt;
     var body = c.body || '';

@@ -56,6 +56,11 @@ CREATE TABLE IF NOT EXISTS `columns` (
   `thumbnail` VARCHAR(255) DEFAULT '',
   `status` VARCHAR(16) NOT NULL DEFAULT 'published',  -- published/draft
   `date` DATE NOT NULL,
+  -- 기존 정적 칼럼(빌드 생성분) 연동용 (2026-07-28)
+  -- file: 원래 파일명을 유지해 이미 검색에 등록된 URL이 깨지지 않게 함
+  -- builtin: 1이면 템플릿으로 통째 덮지 않고 본문·메타만 제자리 갱신
+  `file` VARCHAR(64) DEFAULT NULL,
+  `builtin` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`), KEY `idx_status_date` (`status`, `date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

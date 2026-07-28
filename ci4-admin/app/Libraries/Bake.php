@@ -19,7 +19,7 @@ class Bake
     public function faqPages(): array
     {
         return [
-            'svc-brand' => '브랜딩 · 로고', 'svc-ppt' => 'PPT · 제안서',
+            'svc-brand' => '브랜딩 · 로고', 'svc-ppt' => 'PPT · 제안서', 'svc-mkt' => '마케팅 · 광고',
             'svc-web' => '홈페이지 · 웹', 'svc-studio' => '촬영 · 스튜디오',
             'catalog' => '카탈로그 · 카다로그', 'leaflet' => '리플렛 · 리플릿',
             'pamphlet' => '팜플렛 · 팜플릿', 'brochure' => '브로슈어 · 브로셔', 'poster' => '포스터',
@@ -30,7 +30,7 @@ class Bake
         return [
             'index' => '홈', 'about' => '회사소개', 'portfolio' => '포트폴리오',
             'column' => '블로그', 'contact' => '문의',
-            'svc-brand' => '브랜딩·로고', 'svc-ppt' => 'PPT·제안서', 'svc-web' => '홈페이지·웹',
+            'svc-brand' => '브랜딩·로고', 'svc-ppt' => 'PPT·제안서', 'svc-web' => '홈페이지·웹', 'svc-mkt' => '마케팅·광고',
             'svc-studio' => '촬영·스튜디오', 'catalog' => '카탈로그', 'leaflet' => '리플렛',
             'pamphlet' => '팜플렛', 'brochure' => '브로슈어', 'poster' => '포스터',
         ];
@@ -41,12 +41,12 @@ class Bake
             'index' => '홈', 'about' => '회사소개', 'portfolio' => '포트폴리오', 'contact' => '문의',
             'catalog' => '카탈로그', 'leaflet' => '리플렛', 'pamphlet' => '팜플렛',
             'brochure' => '브로슈어', 'poster' => '포스터',
-            'svc-brand' => '브랜딩·로고', 'svc-ppt' => 'PPT·제안서', 'svc-web' => '홈페이지·웹', 'svc-studio' => '촬영·스튜디오',
+            'svc-brand' => '브랜딩·로고', 'svc-ppt' => 'PPT·제안서', 'svc-web' => '홈페이지·웹', 'svc-studio' => '촬영·스튜디오', 'svc-mkt' => '마케팅·광고',
         ];
     }
     private function allPages(): array
     {
-        $p = ['index','about','portfolio','column','contact','svc-brand','svc-ppt','svc-web','svc-studio',
+        $p = ['index','about','portfolio','column','contact','svc-brand','svc-ppt','svc-web','svc-studio','svc-mkt',
               'catalog','leaflet','pamphlet','brochure','poster','column-design','column-catalog','column-logo','column-print'];
         $files = array_map(fn($x) => "$x.html", $p);
         foreach (glob(FCPATH . 'col-*.html') ?: [] as $f) $files[] = basename($f);
