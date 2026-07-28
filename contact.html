@@ -205,22 +205,56 @@
                 <div class="ct-field">
                     <label class="ct-field-label">필요하신 서비스 <span class="ct-req">*</span></label>
                     <div class="ct-radio-group" id="serviceGroup">
-                        <label class="ct-radio"><input type="radio" name="service" value="디자인만" required><span>디자인만</span></label>
-                        <label class="ct-radio"><input type="radio" name="service" value="디자인 + 인쇄"><span>디자인 + 인쇄</span></label>
-                        <label class="ct-radio"><input type="radio" name="service" value="기타"><span>기타</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="브랜딩 · 로고" data-svc="brand" required><span>브랜딩 · 로고</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="인쇄 · 홍보물" data-svc="print"><span>인쇄 · 홍보물</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="PPT · 제안서" data-svc="ppt"><span>PPT · 제안서</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="홈페이지 · 웹" data-svc="web"><span>홈페이지 · 웹</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="촬영 · 스튜디오" data-svc="studio"><span>촬영 · 스튜디오</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="마케팅 · 광고" data-svc="mkt"><span>마케팅 · 광고</span></label>
+                        <label class="ct-radio"><input type="radio" name="service" value="기타" data-svc="etc"><span>기타</span></label>
                     </div>
                 </div>
             </div>
             <div class="ct-form-row">
                 <div class="ct-field">
-                    <label class="ct-field-label">프로젝트 유형 <span class="ct-req">*</span></label>
+                    <label class="ct-field-label">세부 항목 <span class="ct-req">*</span></label>
+                    <p class="ct-field-hint" id="projectTypeHint">위에서 서비스를 먼저 선택해 주세요.</p>
                     <div class="ct-radio-group" id="projectTypeGroup">
-                        <label class="ct-radio"><input type="radio" name="project_type" value="카탈로그 · 브로슈어" required><span>카탈로그 · 브로슈어</span></label>
-                        <label class="ct-radio"><input type="radio" name="project_type" value="책자"><span>책자 <small>(기념집 · 보고서 · 사례집 · 안내서 · 메뉴얼 · 가이드북)</small></span></label>
-                        <label class="ct-radio"><input type="radio" name="project_type" value="리플렛 · 팜플렛"><span>리플렛 · 팜플렛</span></label>
-                        <label class="ct-radio"><input type="radio" name="project_type" value="소식지"><span>소식지</span></label>
-                        <label class="ct-radio"><input type="radio" name="project_type" value="포스터"><span>포스터</span></label>
-                        <label class="ct-radio"><input type="radio" name="project_type" value="기타"><span>기타</span></label>
+                        <label class="ct-radio" data-svc="brand"><input type="radio" name="project_type" value="로고 · CI/BI 디자인"><span>로고 · CI/BI 디자인</span></label>
+                        <label class="ct-radio" data-svc="brand"><input type="radio" name="project_type" value="브랜드 네이밍"><span>브랜드 네이밍</span></label>
+                        <label class="ct-radio" data-svc="brand"><input type="radio" name="project_type" value="캐릭터 디자인"><span>캐릭터 디자인</span></label>
+                        <label class="ct-radio" data-svc="brand"><input type="radio" name="project_type" value="명함 · 패키지"><span>명함 · 패키지</span></label>
+                        <label class="ct-radio" data-svc="brand"><input type="radio" name="project_type" value="창업 브랜딩 패키지"><span>창업 브랜딩 패키지</span></label>
+
+                        <label class="ct-radio" data-svc="print"><input type="radio" name="project_type" value="카탈로그 · 브로슈어"><span>카탈로그 · 브로슈어</span></label>
+                        <label class="ct-radio" data-svc="print"><input type="radio" name="project_type" value="리플렛 · 팜플렛"><span>리플렛 · 팜플렛</span></label>
+                        <label class="ct-radio" data-svc="print"><input type="radio" name="project_type" value="책자"><span>책자 <small>(기념집 · 보고서 · 매뉴얼 · 안내서)</small></span></label>
+                        <label class="ct-radio" data-svc="print"><input type="radio" name="project_type" value="포스터 · 전단"><span>포스터 · 전단</span></label>
+                        <label class="ct-radio" data-svc="print"><input type="radio" name="project_type" value="소식지"><span>소식지</span></label>
+
+                        <label class="ct-radio" data-svc="ppt"><input type="radio" name="project_type" value="회사소개서"><span>회사소개서</span></label>
+                        <label class="ct-radio" data-svc="ppt"><input type="radio" name="project_type" value="입찰 · 투자 제안서"><span>입찰 · 투자 제안서</span></label>
+                        <label class="ct-radio" data-svc="ppt"><input type="radio" name="project_type" value="발표자료"><span>발표자료</span></label>
+                        <label class="ct-radio" data-svc="ppt"><input type="radio" name="project_type" value="PPT 템플릿"><span>PPT 템플릿</span></label>
+
+                        <label class="ct-radio" data-svc="web"><input type="radio" name="project_type" value="홈페이지 제작"><span>홈페이지 제작</span></label>
+                        <label class="ct-radio" data-svc="web"><input type="radio" name="project_type" value="쇼핑몰 구축"><span>쇼핑몰 구축</span></label>
+                        <label class="ct-radio" data-svc="web"><input type="radio" name="project_type" value="상세페이지 · 랜딩페이지"><span>상세페이지 · 랜딩페이지</span></label>
+                        <label class="ct-radio" data-svc="web"><input type="radio" name="project_type" value="앱 개발"><span>앱 개발</span></label>
+
+                        <label class="ct-radio" data-svc="studio"><input type="radio" name="project_type" value="제품 촬영"><span>제품 촬영</span></label>
+                        <label class="ct-radio" data-svc="studio"><input type="radio" name="project_type" value="공간 · 현장 촬영"><span>공간 · 현장 촬영</span></label>
+                        <label class="ct-radio" data-svc="studio"><input type="radio" name="project_type" value="인물 · 프로필 촬영"><span>인물 · 프로필 촬영</span></label>
+                        <label class="ct-radio" data-svc="studio"><input type="radio" name="project_type" value="영상 · 숏폼 촬영"><span>영상 · 숏폼 촬영</span></label>
+
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="블로그 운영대행"><span>블로그 운영대행</span></label>
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="인스타그램 운영대행"><span>인스타그램 운영대행</span></label>
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="검색 상위노출 · 기자단"><span>검색 상위노출 · 기자단</span></label>
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="퍼포먼스 광고"><span>퍼포먼스 광고</span></label>
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="숏폼 콘텐츠"><span>숏폼 콘텐츠</span></label>
+                        <label class="ct-radio" data-svc="mkt"><input type="radio" name="project_type" value="언론홍보"><span>언론홍보</span></label>
+
+                        <label class="ct-radio" data-svc="brand print ppt web studio mkt etc"><input type="radio" name="project_type" value="기타 · 직접 상담"><span>기타 · 직접 상담</span></label>
                     </div>
                 </div>
             </div>
@@ -329,6 +363,35 @@
 (function(){
     var form = document.querySelector('.ct-form');
     if(!form) return;
+
+    /* 세부 항목 — 선택한 서비스에 해당하는 것만 노출
+       (서비스가 6종으로 늘어 전체를 한 번에 보여주면 28개라 고르기 어려움) */
+    (function(){
+        var group = document.getElementById('projectTypeGroup');
+        var hint  = document.getElementById('projectTypeHint');
+        if(!group) return;
+        var opts = [].slice.call(group.querySelectorAll('.ct-radio'));
+        function apply(svc){
+            var first = null;
+            opts.forEach(function(op){
+                var on = svc && op.getAttribute('data-svc').split(' ').indexOf(svc) >= 0;
+                op.style.display = on ? '' : 'none';
+                var input = op.querySelector('input');
+                if(!on){ input.checked = false; input.removeAttribute('required'); }
+                else if(!first){ first = input; }
+            });
+            // 숨겨진 항목에 required가 남으면 브라우저가 '보이지 않는 항목' 오류를 냄
+            opts.forEach(function(op){ op.querySelector('input').removeAttribute('required'); });
+            if(first) first.setAttribute('required', 'required');
+            group.style.display = svc ? '' : 'none';
+            if(hint) hint.style.display = svc ? 'none' : '';
+        }
+        form.querySelectorAll('input[name="service"]').forEach(function(r){
+            r.addEventListener('change', function(){ apply(r.getAttribute('data-svc')); });
+        });
+        var checked = form.querySelector('input[name="service"]:checked');
+        apply(checked ? checked.getAttribute('data-svc') : null);
+    })();
     form.addEventListener('submit', function(e){
         e.preventDefault();
         var lines = [];

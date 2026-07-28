@@ -397,3 +397,6 @@
     .ct-privacy-check { font-size: 14px; }
     .ct-privacy-detail { padding-left: 0; }
 }
+
+/* ct-field-hint: 세부 항목 안내 (서비스 선택 전 표시) */
+.ct-field-hint { margin: 0 0 4px; font-size: 14px; color: #8a9694; }
