@@ -15,7 +15,7 @@ SRC = HOME / "dfirst-new" / "assets"
 
 PRIMARY = "#0C9384"
 PHONE = "1600-9487"
-EMAIL = "firstmk1111@gmail.com"
+EMAIL = "work@firstmkt.co.kr"
 SITE = "퍼스트디자인 인천지사"
 PAGES = ["about", "portfolio", "review", "column", "notice", "contact"]
 
@@ -869,7 +869,7 @@ h = h.replace("</body>", """<script>
             if(val) lines.push((label||'').trim() + ' : ' + val);
         });
         var body = encodeURIComponent('[퍼스트디자인 인천지사 문의]\\n\\n' + lines.join('\\n'));
-        location.href = 'mailto:firstmk1111@gmail.com?subject=' + encodeURIComponent('[인천지사 문의] 프로젝트 상담 요청') + '&body=' + body;
+        location.href = 'mailto:work@firstmkt.co.kr?subject=' + encodeURIComponent('[인천지사 문의] 프로젝트 상담 요청') + '&body=' + body;
     });
 })();
 </script>

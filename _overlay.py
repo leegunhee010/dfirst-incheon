@@ -12,7 +12,7 @@ FIRST.mkdir(parents=True, exist_ok=True)
 PRIMARY = "#0C9384"   # 인천 딥 틸
 PRIMARY_DARK = "#0A7A6E"
 PHONE = "1600-9487"   # 본사 대표번호(인천 전용번호 확정 시 교체)
-EMAIL = "firstmk1111@gmail.com"
+EMAIL = "work@firstmkt.co.kr"
 
 # ---------- 1. 퍼스트 실적 이미지 복사 ----------
 SRC = HOME / "dfirst-new" / "assets"

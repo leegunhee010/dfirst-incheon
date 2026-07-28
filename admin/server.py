@@ -593,7 +593,7 @@ def seo_save(page):
     jsave("seo_overrides", ov)
     bake.bake_seo(page, meta)
     return jsonify({"ok": True})
-json_tab("settings", {"phone": "1600-9487", "email": "firstmk1111@gmail.com"})
+json_tab("settings", {"phone": "1600-9487", "email": "work@firstmkt.co.kr"})
 
 # ---------- FAQ (완전 동작 + 굽기 + FAQPage 구조화데이터) ----------
 @app.get("/api/faq")

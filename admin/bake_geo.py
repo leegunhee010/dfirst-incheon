@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """로컬(GEO) 완성: 완전한 LocalBusiness JSON-LD를 전 주요 페이지에 굽고, 푸터 주소 텍스트 갱신.
-주소=인천 남동구 미래로 16 3층(우21558), 좌표 37.4514027/126.7050163, 평일 09:00–18:00."""
+주소=인천 남동구 미래로 16 3층(우21558), 좌표 37.4514027/126.7050163, 평일 09:00 ~ 18:00."""
 import re, json, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -24,7 +24,7 @@ def localbusiness_ld(domain="https://incheondesign.co.kr"):
         "description": "인천 카탈로그·브로슈어·리플렛·포스터·로고 디자인 제작 전문. 기획부터 인쇄·납품까지 원스톱.",
         "url": domain + "/",
         "telephone": PHONE,
-        "email": "firstmk1111@gmail.com",
+        "email": "work@firstmkt.co.kr",
         "image": domain + "/theme/assets/first/mainbanner0001.jpg",
         "priceRange": "₩₩",
         "address": {
