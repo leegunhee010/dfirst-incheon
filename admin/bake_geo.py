@@ -61,9 +61,11 @@ def bake_geo(domain="https://incheondesign.co.kr"):
         s = re.sub(r'<script type="application/ld\+json">\s*\{[^<]*?"@type":\s*"LocalBusiness".*?\}\s*</script>',
                    '', s, flags=re.S)
         s = s.replace("</head>", ld + "\n</head>", 1)
-        # 푸터 주소 텍스트: "인천광역시"(단독) → 전체 주소
-        s = re.sub(r'(소재지\s*:\s*)인천광역시(?!\S)', r'\g<1>' + ADDR_FULL, s)
-        s = s.replace("소재지 : 인천광역시 &nbsp;", f"소재지 : {ADDR_FULL} &nbsp;")
+        # 푸터 주소 텍스트 갱신
+        # ⚠️예전엔 '인천광역시'만 보고 치환해서, 재실행할 때마다 주소가 덧붙어
+        #   "…미래로 16 3층 남동구 미래로 16 3층 남동구 미래로 16 3층"이 됐음(2026-07-28).
+        #   → 소재지 항목 전체를 통째로 다시 씀(멱등).
+        s = re.sub(r'(소재지\s*:\s*)[^|<]*', r'\g<1>' + ADDR_FULL + ' ', s)
         p.write_text(s, encoding="utf-8")
         done += 1
     return done
