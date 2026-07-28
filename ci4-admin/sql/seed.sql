@@ -1,7 +1,12 @@
 -- 현재 관리자 데이터 → MySQL 시드 (자동생성)
 SET NAMES utf8mb4;
 
-INSERT INTO `admins`(username,password_hash,created_at) VALUES('admin','ac9689e2272427085e35b9d3e3e8bed88cb3434828b43b86fc0596cad4c6e270','2026-07-24');
+-- ⚠️관리자 계정은 이 파일에 넣지 않습니다.
+-- (배포 시 웹루트로 복사되면 SQL이 그대로 다운로드돼 계정 해시가 노출됨 — 2026-07-28 실제 발생)
+-- 설치 시 아래를 직접 실행해 원하는 비밀번호로 생성하세요.
+--   SET @pw := '여기에_새_비밀번호';
+--   INSERT INTO `admins`(username,password_hash,created_at)
+--     VALUES('admin', SHA2(@pw, 256), CURDATE());
 
 -- 포트폴리오 450개
 INSERT INTO `portfolio`(image,title,type,category,sort_order) VALUES('theme/assets/first/pf2/p_db25b9d483b526.jpg','식품안전정보원','카탈로그','책자',0);
