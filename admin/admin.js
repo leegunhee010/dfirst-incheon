@@ -29,7 +29,13 @@
     $('#loginErr').textContent = '';
     api('/api/login', { method: 'POST', body: { username: u, password: p } })
       .then(function (r) { if (r.ok) showApp(); else $('#loginErr').textContent = r.error || '로그인 실패'; })
-      .catch(function () { $('#loginErr').textContent = '아이디 또는 비밀번호가 올바르지 않습니다.'; });
+      .catch(function () {
+        // 예전엔 서버에 연결조차 못 해도 '비밀번호가 올바르지 않습니다'로 떠서
+        // 원인을 찾기 어려웠음(2026-07-28) → 연결 실패와 인증 실패를 구분해 안내
+        var base = window.API_BASE || location.origin;
+        $('#loginErr').innerHTML = '관리자 서버에 연결할 수 없습니다.<br>' +
+          '<small style="color:#888">' + base + ' 응답 없음 — 서버가 실행 중인지 확인해 주세요.</small>';
+      });
   }
   $('#loginBtn').addEventListener('click', doLogin);
   $('#p').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
