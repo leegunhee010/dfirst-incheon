@@ -251,13 +251,11 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* API 주소 결정 (2026-07-28)
-   로컬(localhost)에서 열면 같은 서버로 직접 호출 — 예전엔 로컬에서도 터널 주소로 보내서
-   터널이 꺼지면 로컬 관리자도 로그인이 안 됐음.
-   깃허브 등 외부에서 열면 이 컴퓨터의 관리자 서버로 연결되는 터널 주소를 사용(터널 실행 필요). */
-window.API_BASE = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)
-  ? ""   // 동일 출처
-  : "https://poster-laser-deferred-arab.trycloudflare.com";
+/* API 주소 — 기본은 '같은 출처'(빈 문자열).
+   서버(PHP 8.2 / CI4)에 올리면 관리자와 API가 같은 도메인이라 이 상태로 동작합니다.
+   정적 호스팅에서 다른 곳의 관리자 서버를 호출해야 할 때만 아래에 그 주소를 넣으세요
+   (예: 로컬 서버 + 터널). 개인 PC 주소를 저장소에 남기지 않도록 비워 둡니다. */
+window.API_BASE = "";
 </script>
 <script src="admin.js"></script>
 <script>

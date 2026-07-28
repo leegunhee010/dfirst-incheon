@@ -21,3 +21,6 @@ Thumbs.db
 # 관리자 인증정보(비번 해시) — 저장소 제외
 admin/data/auth.json
 admin/data/admins.json
+
+# 빌드 참고용 원본 백업 — 로컬에만 보관(공유 저장소에서 제외)
+_src/
