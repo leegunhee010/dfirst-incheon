@@ -26,12 +26,6 @@ KEYWORDS = ("인천 마케팅 대행, 블로그 운영대행, 인스타그램 �
 SUB = ('인천 기업의 마케팅, 광고가 아닌 콘텐츠로 찾게 만듭니다.<br/>'
        '<span class="g">블로그·인스타그램·숏폼·언론홍보까지 한 팀이 운영합니다.</span>')
 
-# 히어로 아래 롤링 — 마케팅은 실제 포폴이 없어 채널 카드를 굽어 사용(_mktcards.py)
-# (2026-07-27 사용자 "마케팅은 지금 포폴이 없으니까 그냥 사진을 만들던지 해서 적용해")
-# ⚠️무관한 인쇄·촬영 포폴을 마케팅 작업물처럼 섞어 쓰던 것 폐기
-ROLL = [M + "card-blog.jpg", M + "card-insta.jpg", M + "card-baepo.jpg", M + "card-top.jpg",
-        M + "card-perf.jpg", M + "card-short.jpg", M + "card-press.jpg"]
-
 # 소개 글 2개 (subsvc.css .ss-item 재사용 — 본사 마케팅 페이지 핵심 카피 요약)
 INTRO = [
     ("단순한 상위노출이 아닌, 콘텐츠 마케팅입니다",
@@ -116,8 +110,9 @@ hero = ('<section class="hero2"><div class="hero2-wrap">'
         f'<p class="hero2-sub">{SUB}</p>'
         '</div></section>\n')
 
-track = "".join(f'<img src="{p}" alt="{LABEL} 작업물" loading="lazy">' for p in ROLL) * 2
-roll = f'<section class="svc-roll"><div class="svc-roll-track">{track}</div></section>\n'
+# 2026-07-28 사용자 "마케팅 페이지에 이거 빼자" — 히어로 아래 롤링 카드 섹션 제거
+# (실제 포폴이 아닌 생성 카드였고, 아래 세부 서비스와 내용이 겹침)
+roll = ""
 
 intro_items = "".join(
     f'<div class="ss-item"><div><span class="ss-no">0{i}</span><h3>{t}</h3></div><p>{p}</p></div>'
