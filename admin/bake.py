@@ -127,12 +127,15 @@ def bake_settings():
         if head:
             s = s.replace("</head>", f"<!--head-code-->{head}<!--/head-code-->\n</head>", 1)
         # 파비콘
+        # ⚠️루트 절대경로(/theme/...)로 굽지 말 것 — 사이트가 하위 경로(/dfirst-incheon/)로
+        #   서비스돼 파비콘이 404로 사라졌었음(2026-07-28). 상대경로로 고정.
         if favicon:
+            fav = favicon.lstrip("/")
             if re.search(r'<link[^>]*rel="(?:shortcut )?icon"[^>]*>', s):
                 s = re.sub(r'<link[^>]*rel="(?:shortcut )?icon"[^>]*>',
-                           f'<link rel="icon" href="/{favicon}">', s, count=1)
+                           f'<link rel="icon" href="{fav}">', s, count=1)
             else:
-                s = s.replace("</head>", f'<link rel="icon" href="/{favicon}">\n</head>', 1)
+                s = s.replace("</head>", f'<link rel="icon" href="{fav}">\n</head>', 1)
         # 기본 og:image (페이지별 지정 없을 때 공통)
         if ogimage:
             s = re.sub(r'(<meta property="og:image" content=")[^"]*(")',
